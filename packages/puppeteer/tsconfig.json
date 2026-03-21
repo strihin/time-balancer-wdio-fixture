@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"],
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["../shared/src/config/*"],
+      "@fixtures/*": ["../shared/src/fixtures/*"],
+      "@selectors/*": ["../shared/src/selectors/*"],
+      "@support/*": ["src/support/*"]
+    }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}

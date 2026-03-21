@@ -1,0 +1,21 @@
+{
+  "name": "@benchmarks/puppeteer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "pretest": "rm -rf .logs",
+    "test": "../shared/node_modules/.bin/ts-node src/runner.ts run",
+    "pretest:ui": "rm -rf .logs",
+    "test:ui": "../shared/node_modules/.bin/ts-node src/runner.ts ui"
+  },
+  "dependencies": {
+    "@benchmarks/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "jest-junit": "^16.0.0"
+  }
+}
