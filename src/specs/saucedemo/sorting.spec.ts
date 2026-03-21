@@ -1,0 +1,48 @@
+import { login } from '@support/auth';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { sortOptions } from '@fixtures/checkout';
+
+async function getItemNames(): Promise<string[]> {
+  return $$(InventorySel.itemName).map((el) => el.getText());
+}
+
+async function getItemPrices(): Promise<number[]> {
+  const texts: string[] = await $$(InventorySel.itemPrice).map((el) => el.getText());
+  return texts.map((t) => parseFloat(t.replace('$', '')));
+}
+
+describe('Sorting', () => {
+  beforeEach(async () => {
+    await login();
+    await $(InventorySel.sortContainer).waitForDisplayed({ timeout: 5000 });
+  });
+
+  it('default sort is Name (A to Z)', async () => {
+    const texts = await getItemNames();
+    expect(texts).toEqual([...texts].sort());
+  });
+
+  it('sorts by Name (Z to A)', async () => {
+    await $(InventorySel.sortContainer).selectByVisibleText(sortOptions.nameZtoA.label);
+    const texts = await getItemNames();
+    expect(texts).toEqual([...texts].sort().reverse());
+  });
+
+  it('sorts by Price (low to high)', async () => {
+    await $(InventorySel.sortContainer).selectByVisibleText(sortOptions.priceLowToHigh.label);
+    const vals = await getItemPrices();
+    expect(vals).toEqual([...vals].sort((a, b) => a - b));
+  });
+
+  it('sorts by Price (high to low)', async () => {
+    await $(InventorySel.sortContainer).selectByVisibleText(sortOptions.priceHighToLow.label);
+    const vals = await getItemPrices();
+    expect(vals).toEqual([...vals].sort((a, b) => b - a));
+  });
+
+  it('item count remains 6 after any sort', async () => {
+    await $(InventorySel.sortContainer).selectByVisibleText(sortOptions.priceHighToLow.label);
+    const items = await $$(InventorySel.item);
+    expect(items.length).toBe(6);
+  });
+});

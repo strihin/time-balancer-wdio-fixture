@@ -1,0 +1,18 @@
+export const CheckoutSelectors = {
+  infoContainer: '[data-test="checkout-info-container"]',
+  firstName: '[data-test="firstName"]',
+  lastName: '[data-test="lastName"]',
+  postalCode: '[data-test="postalCode"]',
+  continueBtn: '[data-test="continue"]',
+  cancelBtn: '[data-test="cancel"]',
+  error: '[data-test="error"]',
+  summaryContainer: '[data-test="checkout-summary-container"]',
+  summaryItem: '.cart_item',
+  itemTotal: '[data-test="subtotal-label"]',
+  taxLabel: '[data-test="tax-label"]',
+  totalLabel: '[data-test="total-label"]',
+  finishBtn: '[data-test="finish"]',
+  completeHeader: '[data-test="complete-header"]',
+  backToProducts: '[data-test="back-to-products"]',
+  inventoryList: '.inventory_list',
+} as const;
