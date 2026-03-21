@@ -1,19 +1,27 @@
-# Phase 1: Manual Execution Checklist
+# Monorepo Testing Checklist
 
-Since the directory restructuring has been completed automatically (establishing `packages/webdriverio` and `packages/shared`, alongside linking `pnpm-workspace.yaml`), all that is left to finish Phase 1 is invoking the package manager.
+Because `webdriverio`, `cypress`, and `playwright` all require aggressively downloading heavy browser binaries to your machine (which can hang the assistant), you should manually trigger their installations securely.
 
-## 1. Install Dependencies
-Open your terminal at the root of your project (`time-balancer-wdio-fixture`) and run:
+## Phase 1: WebdriverIO (Completed)
+You can run the existing WebdriverIO tests out of the centralized workspace:
+```bash
+pnpm --filter @benchmarks/webdriverio run test:ui cart
+```
+
+## Phase 2: Cypress
+The Cypress workspace has been fully scaffolded. We created `packages/cypress`, hooked up typescript resolution so it can read configurations natively from the `@benchmarks/shared` module, and translated the `login` suite from WebDriver syntax to Cypress queuing syntax.
+
+### 1. Install Cypress
+To pull the Cypress binary into your `node_modules`, run:
 ```bash
 pnpm install
 ```
 
-## 2. Verify Execution
-Once `pnpm` finishes downloading browser binaries and node modules, verify that the `@selectors` configuration accurately maps between the webdriver suite and the shared module by launching a test:
+### 2. Verify Execution
+To open the Cypress runner and test out the new `login.cy.ts` integration, execute:
 ```bash
-pnpm --filter @benchmarks/webdriverio run test:ui checkout
+pnpm --filter @benchmarks/cypress run test:ui
 ```
+*(Select E2E Testing -> Chrome -> click on `login.cy.ts` to see it execute the 5 assertions!)*
 
-*(Note: You can pass any suite name defined in your `suites` config like `cart`, `login`, `checkout`, etc.)*
-
-If WebdriverIO boots cleanly, your monorepo base is officially solidified! Let me know whenever you're ready for Phase 2 (Cypress), Phase 3 (Playwright) or if you encounter any strange path resolution issues!
+Let me know whenever you're satisfied with Cypress and we can begin Phase 3 (Playwright)!

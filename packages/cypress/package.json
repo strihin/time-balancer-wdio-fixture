@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "pretest": "rm -rf .logs",
     "test": "../shared/node_modules/.bin/ts-node src/runner.ts run",
+    "pretest:ui": "rm -rf .logs",
     "test:ui": "../shared/node_modules/.bin/ts-node src/runner.ts open"
   },
   "dependencies": {
     "@benchmarks/shared": "workspace:*"
   },
   "devDependencies": {
-    "cypress": "^13.7.0"
+    "cypress": "^15.12.0",
+    "mocha": "^11.7.5"
   }
 }
