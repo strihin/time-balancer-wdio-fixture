@@ -1,0 +1,17 @@
+{
+  "name": "@benchmarks/playwright",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "pretest": "rm -rf .logs",
+    "test": "../shared/node_modules/.bin/ts-node src/runner.ts run",
+    "pretest:ui": "rm -rf .logs",
+    "test:ui": "../shared/node_modules/.bin/ts-node src/runner.ts ui"
+  },
+  "dependencies": {
+    "@benchmarks/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0"
+  }
+}

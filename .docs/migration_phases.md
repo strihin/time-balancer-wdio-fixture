@@ -86,3 +86,6 @@ In this phase, we add Playwright to the mix, enabling a three-way direct compari
   ```
 - Rewrite the WebDriver locators into Playwright format. E.g., `await $(LoginSel.loginButton).click()` becomes `await page.locator(LoginSel.loginButton).click()`.
 - Add a script in the root `package.json` tracking start/end times across all 3 tests dynamically!
+
+
+## Phase 4: Integrate Puppeteer
