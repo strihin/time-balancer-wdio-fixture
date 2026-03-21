@@ -11,8 +11,8 @@
     "baseUrl": ".",
     "paths": {
       "@config/*": ["src/config/*"],
-      "@fixtures/*": ["src/fixtures/*"],
-      "@selectors/*": ["src/selectors/*"],
+      "@fixtures/*": ["../shared/src/fixtures/*"],
+      "@selectors/*": ["../shared/src/selectors/*"],
       "@support/*": ["src/support/*"]
     },
     "types": ["node", "@wdio/globals/types", "mocha"]

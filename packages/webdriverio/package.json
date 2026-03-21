@@ -1,0 +1,22 @@
+{
+  "name": "@benchmarks/webdriverio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "wdio run wdio.conf.ts",
+    "test:ui": "HEADLESS=false wdio run wdio.conf.ts",
+    "test:log": "wdio run wdio.conf.ts 2>&1 | tee .logs/test_results.log"
+  },
+  "dependencies": {
+    "@benchmarks/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@wdio/cli": "^9.0.0",
+    "@wdio/local-runner": "^9.0.0",
+    "@wdio/mcp": "^2.3.1",
+    "@wdio/mocha-framework": "^9.0.0",
+    "@wdio/spec-reporter": "^9.0.0",
+    "serve": "^14.0.0",
+    "webdriverio": "^9.0.0"
+  }
+}
