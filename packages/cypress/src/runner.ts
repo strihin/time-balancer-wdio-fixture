@@ -24,7 +24,7 @@ if (suiteArg) {
 const targetSpecs = suiteName ? suites[suiteName].join(',') : '';
 
 // Build execution command
-const cypressCmd = mode === 'open' ? 'cypress run --headed --no-exit --browser firefox' : 'cypress run';
+const cypressCmd = mode === 'open' ? 'cypress run --headed --browser firefox' : 'cypress run';
 const specFlag = targetSpecs ? `--spec "${targetSpecs}"` : '';
 
 // Purge old performance logs prior to execution
