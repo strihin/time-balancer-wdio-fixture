@@ -7,10 +7,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["src/config/*"],
+      "@constants/*": ["../shared/src/constants/*"],
       "@fixtures/*": ["../shared/src/fixtures/*"],
       "@selectors/*": ["../shared/src/selectors/*"],
       "@support/*": ["src/support/*"]

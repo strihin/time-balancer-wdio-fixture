@@ -3,6 +3,8 @@ import { launchBrowser, login } from '@support/auth';
 import { NavSelectors as NavSel } from '@selectors/nav.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
+import { BASE_URL } from '@constants/index';
+import { clickMenuLink } from '@support/clickMenuLink';
 
 describe('Logout', () => {
   let browser: Browser;
@@ -25,15 +27,14 @@ describe('Logout', () => {
 
   it('opens side menu on burger click', async () => {
     await page.click(NavSel.burgerMenuBtn);
-    await page.waitForSelector(NavSel.logoutLink);
+    await page.waitForSelector(NavSel.logoutLink, { visible: true });
     const link = await page.$(NavSel.logoutLink);
     expect(link).not.toBeNull();
   });
 
   it('logout link redirects to login page', async () => {
     await page.click(NavSel.burgerMenuBtn);
-    await page.waitForSelector(NavSel.logoutLink);
-    await page.click(NavSel.logoutLink);
+    await clickMenuLink(page, NavSel.logoutLink);
     await page.waitForSelector(LoginSel.loginButton);
     const btn = await page.$(LoginSel.loginButton);
     expect(btn).not.toBeNull();
@@ -41,9 +42,8 @@ describe('Logout', () => {
 
   it('session is cleared after logout', async () => {
     await page.click(NavSel.burgerMenuBtn);
-    await page.waitForSelector(NavSel.logoutLink);
-    await page.click(NavSel.logoutLink);
-    await page.goto('https://www.saucedemo.com/inventory.html');
+    await clickMenuLink(page, NavSel.logoutLink);
+    await page.goto(`${BASE_URL}/inventory.html`);
     await page.waitForSelector(LoginSel.loginButton);
     const btn = await page.$(LoginSel.loginButton);
     expect(btn).not.toBeNull();
@@ -51,8 +51,8 @@ describe('Logout', () => {
 
   it('can re-login after logout', async () => {
     await page.click(NavSel.burgerMenuBtn);
-    await page.waitForSelector(NavSel.logoutLink);
-    await page.click(NavSel.logoutLink);
+    await clickMenuLink(page, NavSel.logoutLink);
+    await page.waitForSelector(LoginSel.username);
     await page.type(LoginSel.username, users.standard.username);
     await page.type(LoginSel.password, users.standard.password);
     await page.click(LoginSel.loginButton);

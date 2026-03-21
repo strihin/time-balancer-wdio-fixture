@@ -12,6 +12,7 @@
     "baseUrl": ".",
     "paths": {
       "@config/*": ["../shared/src/config/*"],
+      "@constants/*": ["../shared/src/constants/*"],
       "@fixtures/*": ["../shared/src/fixtures/*"],
       "@selectors/*": ["../shared/src/selectors/*"],
       "@support/*": ["cypress/support/*"]

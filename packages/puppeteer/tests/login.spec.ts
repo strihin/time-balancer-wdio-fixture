@@ -2,6 +2,7 @@ import puppeteer, { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
+import { BASE_URL } from '@constants/index';
 
 describe('Login', () => {
   let browser: Browser;
@@ -10,7 +11,7 @@ describe('Login', () => {
   beforeEach(async () => {
     browser = await launchBrowser();
     page = await browser.newPage();
-    await page.goto('https://www.saucedemo.com');
+    await page.goto(BASE_URL);
   });
 
   afterEach(async () => {

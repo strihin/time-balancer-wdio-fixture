@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import { BASE_URL } from "@constants/index";
 
 // Chromium browser launch args to bypass macOS 15 GPU sandbox crashes
 // in headed mode. Extracted for clarity — see src/config/browser.ts for docs.
@@ -18,7 +19,7 @@ export default defineConfig({
   e2e: {
     chromeWebSecurity: false,
     experimentalWebKitSupport: true,
-    baseUrl: "https://www.saucedemo.com",
+    baseUrl: BASE_URL,
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser, launchOptions) => {
         if (browser.family === 'chromium' && browser.name !== 'electron') {

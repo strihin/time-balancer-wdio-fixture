@@ -1,7 +1,6 @@
 import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as Checkout } from '@selectors/checkout.selectors';
@@ -9,14 +8,8 @@ import { ProductSelectors as Product } from '@selectors/product.selectors';
 import { NavSelectors as Nav } from '@selectors/nav.selectors';
 import { LoginSelectors as Login } from '@selectors/login.selectors';
 
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-async function fillForm(page: Page) {
-  await page.type(Checkout.firstName, firstName);
-  await page.type(Checkout.lastName, lastName);
-  await page.type(Checkout.postalCode, postalCode);
-  await page.click(Checkout.continueBtn);
-}
+import { fillForm } from '@support/fillForm';
+import { clickMenuLink } from '@support/clickMenuLink';
 
 describe('User Journey', () => {
   let browser: Browser;
@@ -25,7 +18,7 @@ describe('User Journey', () => {
   beforeEach(async () => {
     browser = await launchBrowser();
     page = await browser.newPage();
-    await login(page, users.glitch);
+    await login(page, users.standard);
   });
 
   afterEach(async () => {
@@ -49,7 +42,9 @@ describe('User Journey', () => {
     await page.click(Inv.addBackpack);
     await page.click(Inv.cartLink);
     await page.click(Cart.continueShopping);
+    await page.waitForSelector(Inv.addBikeLight);
     await page.click(Inv.addBikeLight);
+    await page.waitForSelector(Inv.cartBadge);
     const badge = await page.$eval(Inv.cartBadge, el => el.textContent);
     expect(badge).toBe('2');
     await page.click(Inv.cartLink);
@@ -100,8 +95,7 @@ describe('User Journey', () => {
     await page.click(Checkout.finishBtn);
     await page.click(Checkout.backToProducts);
     await page.click(Nav.burgerMenuBtn);
-    await page.waitForSelector(Nav.logoutLink);
-    await page.click(Nav.logoutLink);
+    await clickMenuLink(page, Nav.logoutLink);
     await page.waitForSelector(Login.loginButton);
     const btn = await page.$(Login.loginButton);
     expect(btn).not.toBeNull();

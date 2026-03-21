@@ -6,6 +6,7 @@ const config: Config = {
   testMatch: ['**/tests/**/*.spec.ts'],
   moduleNameMapper: {
     '^@config/(.*)$': '<rootDir>/../shared/src/config/$1',
+    '^@constants/(.*)$': '<rootDir>/../shared/src/constants/$1',
     '^@fixtures/(.*)$': '<rootDir>/../shared/src/fixtures/$1',
     '^@selectors/(.*)$': '<rootDir>/../shared/src/selectors/$1',
     '^@support/(.*)$': '<rootDir>/src/support/$1',

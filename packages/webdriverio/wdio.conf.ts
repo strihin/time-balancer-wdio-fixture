@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { BASE_URL } from '@constants/index';
 import path from 'path';
 import { suites } from './src/config/suites';
 
@@ -47,7 +48,7 @@ export const config: WebdriverIO.Config = {
 
   bail: 0,
 
-  baseUrl: 'https://www.saucedemo.com',
+  baseUrl: BASE_URL,
 
   // @wdio/mcp is available as dev dependency for AI-assisted development
   // Run standalone: npx @wdio/mcp

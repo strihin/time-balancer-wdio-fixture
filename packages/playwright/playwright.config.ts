@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { BASE_URL } from '../shared/src/constants';
 
 export default defineConfig({
   testDir: './tests',
@@ -11,7 +12,7 @@ export default defineConfig({
     ['list'],
   ],
   use: {
-    baseURL: 'https://www.saucedemo.com',
+    baseURL: BASE_URL,
     headless: true,
     screenshot: 'only-on-failure',
     video: 'off',
