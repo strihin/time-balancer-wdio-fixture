@@ -1,0 +1,15 @@
+{
+  "name": "@benchmarks/cypress",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "../shared/node_modules/.bin/ts-node src/runner.ts run",
+    "test:ui": "../shared/node_modules/.bin/ts-node src/runner.ts open"
+  },
+  "dependencies": {
+    "@benchmarks/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "cypress": "^13.7.0"
+  }
+}
