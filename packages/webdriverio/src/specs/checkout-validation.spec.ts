@@ -1,14 +1,14 @@
 import { login } from '@support/auth.js';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors.js';
-import { CartSelectors as Cart } from '@selectors/cart.selectors.js';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors.js';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors.js';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors.js';
 
 describe('Checkout – Form Validation', () => {
   beforeEach(async () => {
     await login();
-    await $(Inv.addBackpack).click();
-    await $(Inv.cartLink).click();
-    await $(Cart.checkout).click();
+    await $(InventorySel.addBackpack).click();
+    await $(InventorySel.cartLink).click();
+    await $(CartSel.checkout).click();
     await expect($(CheckoutSel.infoContainer)).toBeDisplayed();
   });
 
@@ -40,6 +40,6 @@ describe('Checkout – Form Validation', () => {
 
   it('cancel button returns to cart page', async () => {
     await $(CheckoutSel.cancelBtn).click();
-    await expect($(Cart.item)).toBeDisplayed();
+    await expect($(CartSel.item)).toBeDisplayed();
   });
 });

@@ -84,9 +84,15 @@ importers:
         specifier: workspace:*
         version: link:../shared
     devDependencies:
+      '@types/mocha':
+        specifier: ^10.0.0
+        version: 10.0.10
       '@wdio/cli':
         specifier: ^9.0.0
         version: 9.26.1(@types/node@20.19.37)(expect-webdriverio@5.6.5)(puppeteer-core@24.40.0)
+      '@wdio/globals':
+        specifier: ^9.0.0
+        version: 9.26.1(expect-webdriverio@5.6.5)(webdriverio@9.26.1(puppeteer-core@24.40.0))
       '@wdio/local-runner':
         specifier: ^9.0.0
         version: 9.26.1(@wdio/globals@9.26.1)(webdriverio@9.26.1(puppeteer-core@24.40.0))

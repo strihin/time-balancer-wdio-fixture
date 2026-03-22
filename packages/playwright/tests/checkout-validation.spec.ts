@@ -1,15 +1,15 @@
 import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
-import { CartSelectors as Cart } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 
 describe('Checkout – Form Validation', () => {
   beforeEach(async ({ page }) => {
     await login(page);
-    await page.locator(Inv.addBackpack).click();
-    await page.locator(Inv.cartLink).click();
-    await page.locator(Cart.checkout).click();
+    await page.locator(InventorySel.addBackpack).click();
+    await page.locator(InventorySel.cartLink).click();
+    await page.locator(CartSel.checkout).click();
     await expect(page.locator(CheckoutSel.infoContainer)).toBeVisible();
   });
 
@@ -41,6 +41,6 @@ describe('Checkout – Form Validation', () => {
 
   test('cancel button returns to cart page', async ({ page }) => {
     await page.locator(CheckoutSel.cancelBtn).click();
-    await expect(page.locator(Cart.item)).toBeVisible();
+    await expect(page.locator(CartSel.item)).toBeVisible();
   });
 });

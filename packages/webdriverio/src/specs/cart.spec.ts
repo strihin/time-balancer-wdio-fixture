@@ -1,5 +1,5 @@
 import { login } from '@support/auth';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 
 describe('Cart', () => {
@@ -12,18 +12,18 @@ describe('Cart', () => {
   });
 
   it('adds an item and cart badge shows 1', async () => {
-    await $(Inv.addBackpack).click();
+    await $(InventorySel.addBackpack).click();
     await expect($(CartSel.badge)).toHaveText('1');
   });
 
   it('opens cart page and shows added item', async () => {
-    await $(Inv.addBackpack).click();
+    await $(InventorySel.addBackpack).click();
     await $(CartSel.link).click();
     await expect($(CartSel.item)).toBeDisplayed();
   });
 
   it('removes an item from the cart', async () => {
-    await $(Inv.addBackpack).click();
+    await $(InventorySel.addBackpack).click();
     await $(CartSel.link).click();
     await $(CartSel.removeBackpack).click();
     const items = await $$(CartSel.item);
@@ -31,8 +31,8 @@ describe('Cart', () => {
   });
 
   it('cart badge updates when adding multiple items', async () => {
-    await $(Inv.addBackpack).click();
-    await $(Inv.addBikeLight).click();
+    await $(InventorySel.addBackpack).click();
+    await $(InventorySel.addBikeLight).click();
     await expect($(CartSel.badge)).toHaveText('2');
   });
 });

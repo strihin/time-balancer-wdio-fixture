@@ -32,6 +32,25 @@
 
 **Exceptions**: Files dictated by external tooling conventions (e.g. `package.json`, `tsconfig.json`, `pnpm-workspace.yaml`, `Dockerfile`, `.env`) are exempt.
 
+## Selector Import Alias Convention
+
+**CRITICAL RULE**: When importing selector objects, the `as` alias MUST always end with the **`Sel` suffix**. Never shorten it to just the domain name.
+
+**Pattern**: `import { <Name>Selectors as <Name>Sel } from '...'`
+
+**Examples:**
+| ❌ Wrong | ✅ Correct |
+|---|---|
+| `import { CartSelectors as Cart }` | `import { CartSelectors as CartSel }` |
+| `import { CheckoutSelectors as Checkout }` | `import { CheckoutSelectors as CheckoutSel }` |
+| `import { InventorySelectors as Inv }` | `import { InventorySelectors as InventorySel }` |
+| `import { NavSelectors as Nav }` | `import { NavSelectors as NavSel }` |
+| `import { LoginSelectors as Login }` | `import { LoginSelectors as LoginSel }` |
+| `import { ProductSelectors as Product }` | `import { ProductSelectors as ProductSel }` |
+
+**Reasoning**: Dropping `Sel` makes the alias look like a data model or component import (e.g. `Cart` could be a cart object, not a selector map). The `Sel` suffix makes the intent unambiguous at a glance.
+
+
 ## Spec File Purity
 
 **CRITICAL RULE**: Spec/test files (`.spec.ts`, `cy.ts`, WDIO spec files) MUST contain **only test cases (`it`/`test` blocks) and lifecycle hooks (`before`, `beforeEach`, `after`, `afterEach`)**. No reusable logic should be defined inline inside a spec file.

@@ -1,8 +1,8 @@
 import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { users } from '@fixtures/users';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
-import { CartSelectors as Cart } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { fillForm } from '@support/fill-form';
 
@@ -15,8 +15,8 @@ describe('Checkout', () => {
     browser = await launchBrowser();
     page = await browser.newPage();
     await login(page, users.standard);
-    await page.click(Inv.addBackpack);
-    await page.click(Cart.link);
+    await page.click(InventorySel.addBackpack);
+    await page.click(CartSel.link);
   });
 
   afterEach(async () => {
@@ -24,14 +24,14 @@ describe('Checkout', () => {
   });
 
   it('proceeds to checkout from cart', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     const container = await page.$(CheckoutSel.infoContainer);
     expect(container).not.toBeNull();
   });
 
   it('fills in customer info and continues to overview', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     await page.waitForSelector(CheckoutSel.summaryContainer);
@@ -40,7 +40,7 @@ describe('Checkout', () => {
   });
 
   it('overview shows item total', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     await page.waitForSelector(CheckoutSel.totalLabel);
@@ -49,7 +49,7 @@ describe('Checkout', () => {
   });
 
   it('completes full checkout and shows confirmation', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     await page.waitForSelector(CheckoutSel.finishBtn);
@@ -59,7 +59,7 @@ describe('Checkout', () => {
   });
 
   it('can navigate back to home after checkout', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     await page.waitForSelector(CheckoutSel.finishBtn);

@@ -1,12 +1,12 @@
 import { login } from '@support/auth';
 import { fillCheckoutForm } from '../support/checkout';
 import { users } from '@fixtures/users';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
-import { CartSelectors as Cart } from '@selectors/cart.selectors';
-import { CheckoutSelectors as Checkout } from '@selectors/checkout.selectors';
-import { ProductSelectors as Product } from '@selectors/product.selectors';
-import { NavSelectors as Nav } from '@selectors/nav.selectors';
-import { LoginSelectors as Login } from '@selectors/login.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
+import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 
 describe('User Journey', () => {
   beforeEach(() => {
@@ -14,62 +14,62 @@ describe('User Journey', () => {
   });
 
   it('browse product detail then add to cart and checkout', () => {
-    cy.get(Inv.itemName).first().click();
-    cy.get(Product.detailName).should('be.visible');
-    cy.get(Product.addToCartBtn).click();
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.checkout).click();
+    cy.get(InventorySel.itemName).first().click();
+    cy.get(ProductSel.detailName).should('be.visible');
+    cy.get(ProductSel.addToCartBtn).click();
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(Checkout.finishBtn).click();
-    cy.get(Checkout.completeHeader).should('have.text', 'Thank you for your order!');
+    cy.get(CheckoutSel.finishBtn).click();
+    cy.get(CheckoutSel.completeHeader).should('have.text', 'Thank you for your order!');
   });
 
   it('add item, return to shopping, add second item, checkout both', () => {
-    cy.get(Inv.addBackpack).click();
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.continueShopping).click();
-    cy.get(Inv.addBikeLight).click();
-    cy.get(Inv.cartBadge).should('have.text', '2');
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.item).should('have.length', 2);
-    cy.get(Cart.checkout).click();
+    cy.get(InventorySel.addBackpack).click();
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.continueShopping).click();
+    cy.get(InventorySel.addBikeLight).click();
+    cy.get(InventorySel.cartBadge).should('have.text', '2');
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.item).should('have.length', 2);
+    cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(Checkout.finishBtn).click();
-    cy.get(Checkout.completeHeader).should('be.visible');
+    cy.get(CheckoutSel.finishBtn).click();
+    cy.get(CheckoutSel.completeHeader).should('be.visible');
   });
 
   it('remove one item mid-checkout then complete with remaining', () => {
-    cy.get(Inv.addBackpack).click();
-    cy.get(Inv.addBikeLight).click();
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.removeBikeLight).click();
-    cy.get(Cart.item).should('have.length', 1);
-    cy.get(Cart.checkout).click();
+    cy.get(InventorySel.addBackpack).click();
+    cy.get(InventorySel.addBikeLight).click();
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.removeBikeLight).click();
+    cy.get(CartSel.item).should('have.length', 1);
+    cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(Checkout.finishBtn).click();
-    cy.get(Checkout.completeHeader).should('have.text', 'Thank you for your order!');
+    cy.get(CheckoutSel.finishBtn).click();
+    cy.get(CheckoutSel.completeHeader).should('have.text', 'Thank you for your order!');
   });
 
   it('complete checkout and return to inventory via back-to-products', () => {
-    cy.get(Inv.addBackpack).click();
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.checkout).click();
+    cy.get(InventorySel.addBackpack).click();
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(Checkout.finishBtn).click();
-    cy.get(Checkout.backToProducts).click();
-    cy.get(Inv.list).should('be.visible');
-    cy.get(Inv.item).should('have.length', 6);
+    cy.get(CheckoutSel.finishBtn).click();
+    cy.get(CheckoutSel.backToProducts).click();
+    cy.get(InventorySel.list).should('be.visible');
+    cy.get(InventorySel.item).should('have.length', 6);
   });
 
   it('full session: login → browse → checkout → logout', () => {
-    cy.get(Inv.addFleeceJacket).click();
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.checkout).click();
+    cy.get(InventorySel.addFleeceJacket).click();
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(Checkout.finishBtn).click();
-    cy.get(Checkout.backToProducts).click();
-    cy.get(Nav.burgerMenuBtn).click();
-    cy.get(Nav.logoutLink).click();
-    cy.get(Login.loginButton).should('be.visible');
+    cy.get(CheckoutSel.finishBtn).click();
+    cy.get(CheckoutSel.backToProducts).click();
+    cy.get(NavSel.burgerMenuBtn).click();
+    cy.get(NavSel.logoutLink).click();
+    cy.get(LoginSel.loginButton).should('be.visible');
   });
 });

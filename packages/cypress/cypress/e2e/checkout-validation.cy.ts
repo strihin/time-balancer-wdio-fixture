@@ -1,14 +1,14 @@
 import { login } from '@support/auth';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
-import { CartSelectors as Cart } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 
 describe('Checkout – Form Validation', () => {
   beforeEach(() => {
     login();
-    cy.get(Inv.addBackpack).click();
-    cy.get(Inv.cartLink).click();
-    cy.get(Cart.checkout).click();
+    cy.get(InventorySel.addBackpack).click();
+    cy.get(InventorySel.cartLink).click();
+    cy.get(CartSel.checkout).click();
     cy.get(CheckoutSel.infoContainer).should('be.visible');
   });
 
@@ -40,6 +40,6 @@ describe('Checkout – Form Validation', () => {
 
   it('cancel button returns to cart page', () => {
     cy.get(CheckoutSel.cancelBtn).click();
-    cy.get(Cart.item).should('be.visible');
+    cy.get(CartSel.item).should('be.visible');
   });
 });

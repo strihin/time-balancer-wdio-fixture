@@ -1,7 +1,7 @@
 import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
-import { CartSelectors as Cart } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { setInputValue } from '@support/checkout';
 
@@ -13,9 +13,9 @@ describe('Checkout – Form Validation', () => {
     browser = await launchBrowser();
     page = await browser.newPage();
     await login(page);
-    await page.click(Inv.addBackpack);
-    await page.click(Inv.cartLink);
-    await page.click(Cart.checkout);
+    await page.click(InventorySel.addBackpack);
+    await page.click(InventorySel.cartLink);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.firstName, { visible: true });
   });
 
@@ -55,8 +55,8 @@ describe('Checkout – Form Validation', () => {
 
   it('cancel button returns to cart page', async () => {
     await page.click(CheckoutSel.cancelBtn);
-    await page.waitForSelector(Cart.item);
-    const item = await page.$(Cart.item);
+    await page.waitForSelector(CartSel.item);
+    const item = await page.$(CartSel.item);
     expect(item).not.toBeNull();
   });
 });

@@ -1,8 +1,8 @@
 import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { users } from '@fixtures/users';
-import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
-import { CartSelectors as Cart } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { addThreeItems } from '@support/inventory';
 import { fillForm } from '@support/fill-form';
@@ -18,7 +18,7 @@ describe('Checkout – Multi-item', () => {
     page = await browser.newPage();
     await login(page, users.standard);
     await addThreeItems(page);
-    await page.click(Inv.cartLink);
+    await page.click(InventorySel.cartLink);
   });
 
   afterEach(async () => {
@@ -26,14 +26,14 @@ describe('Checkout – Multi-item', () => {
   });
 
   it('cart shows 3 items after adding three products', async () => {
-    const badge = await page.$eval(Cart.badge, el => el.textContent);
-    const items = await page.$$(Cart.item);
+    const badge = await page.$eval(CartSel.badge, el => el.textContent);
+    const items = await page.$$(CartSel.item);
     expect(badge).toBe('3');
     expect(items).toHaveLength(3);
   });
 
   it('checkout overview lists all three items', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     const items = await page.$$(CheckoutSel.summaryItem);
@@ -41,7 +41,7 @@ describe('Checkout – Multi-item', () => {
   });
 
   it('item total on overview matches sum of item prices', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     const text = await page.$eval(CheckoutSel.itemTotal, el => el.textContent ?? '');
@@ -50,7 +50,7 @@ describe('Checkout – Multi-item', () => {
   });
 
   it('tax is calculated on overview', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     const text = await page.$eval(CheckoutSel.taxLabel, el => el.textContent ?? '');
@@ -59,7 +59,7 @@ describe('Checkout – Multi-item', () => {
   });
 
   it('completes checkout with multiple items', async () => {
-    await page.click(Cart.checkout);
+    await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     await page.waitForSelector(CheckoutSel.finishBtn);
