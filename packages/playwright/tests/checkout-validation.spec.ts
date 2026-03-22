@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 
-test.describe('Checkout – Form Validation', () => {
-  test.beforeEach(async ({ page }) => {
+describe('Checkout – Form Validation', () => {
+  beforeEach(async ({ page }) => {
     await login(page);
     await page.locator(Inv.addBackpack).click();
     await page.locator(Inv.cartLink).click();

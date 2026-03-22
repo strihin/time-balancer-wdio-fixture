@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
 
-test.describe('Login', () => {
-  test.beforeEach(async ({ page }) => {
+describe('Login', () => {
+  beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 

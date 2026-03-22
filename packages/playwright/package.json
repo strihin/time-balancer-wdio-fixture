@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "pretest": "rm -rf .logs",
-    "test": "../shared/node_modules/.bin/ts-node src/runner.ts run",
+    "test": "ts-node src/runner.ts run",
     "pretest:ui": "rm -rf .logs",
-    "test:ui": "../shared/node_modules/.bin/ts-node src/runner.ts ui"
+    "test:ui": "ts-node src/runner.ts ui"
   },
   "dependencies": {
     "@benchmarks/shared": "workspace:*"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.0"
+    "vite-tsconfig-paths": "^6.1.1",
+    "@playwright/test": "^1.58.2",
+    "playwright": "^1.51.0",
+    "vitest": "^3.0.0"
   }
 }

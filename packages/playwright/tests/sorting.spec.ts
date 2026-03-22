@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { sortOptions } from '@fixtures/checkout';
 
-test.describe('Sorting', () => {
-  test.beforeEach(async ({ page }) => {
+describe('Sorting', () => {
+  beforeEach(async ({ page }) => {
     await login(page);
     await expect(page.locator(InventorySel.sortContainer)).toBeVisible();
   });

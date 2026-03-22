@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
 import { users } from '@fixtures/users';
 import { checkoutForms } from '@fixtures/checkout';
@@ -18,8 +18,8 @@ async function fillForm(page: import('@playwright/test').Page) {
   await page.locator(Checkout.continueBtn).click();
 }
 
-test.describe('User Journey', () => {
-  test.beforeEach(async ({ page }) => {
+describe('User Journey', () => {
+  beforeEach(async ({ page }) => {
     await login(page, users.glitch);
   });
 

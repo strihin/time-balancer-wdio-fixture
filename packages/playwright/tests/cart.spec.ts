@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 
-test.describe('Cart', () => {
-  test.beforeEach(async ({ page }) => {
+describe('Cart', () => {
+  beforeEach(async ({ page }) => {
     await login(page);
   });
 

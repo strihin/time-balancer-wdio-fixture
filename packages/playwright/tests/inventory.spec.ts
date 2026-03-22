@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 
-test.describe('Inventory', () => {
-  test.beforeEach(async ({ page }) => {
+describe('Inventory', () => {
+  beforeEach(async ({ page }) => {
     await login(page);
   });
 

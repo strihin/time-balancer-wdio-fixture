@@ -5,22 +5,22 @@ export interface User {
 
 export const users = {
   standard: {
-    username: process.env.SAUCE_USER ?? 'standard_user',
-    password: process.env.SAUCE_PASS ?? 'secret_sauce',
+    username: process.env.SAUCE_USER || 'standard_user',
+    password: process.env.SAUCE_PASS || 'secret_sauce',
   } satisfies User,
 
   locked: {
     username: 'locked_out_user',
-    password: process.env.SAUCE_PASS ?? 'secret_sauce',
+    password: process.env.SAUCE_PASS || 'secret_sauce',
   } satisfies User,
 
   glitch: {
-    username: 'performance_glitch_user',
-    password: process.env.SAUCE_PASS ?? 'secret_sauce',
+    username: process.env.SAUCE_GLITCH_USER || 'performance_glitch_user',
+    password: process.env.SAUCE_PASS || 'secret_sauce',
   } satisfies User,
 
   wrongPassword: {
-    username: process.env.SAUCE_USER ?? 'standard_user',
+    username: process.env.SAUCE_USER || 'standard_user',
     password: 'wrong_password',
   } satisfies User,
 } as const;

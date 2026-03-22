@@ -1,6 +1,7 @@
 import * as child_process from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import { purgeLogs } from '../../shared/src/utils/cleanup';
 import { suites } from './config/suites';
 
 const mode = process.argv[2]; // 'run' or 'open'
@@ -28,10 +29,7 @@ const cypressCmd = mode === 'open' ? 'cypress run --headed --browser firefox' : 
 const specFlag = targetSpecs ? `--spec "${targetSpecs}"` : '';
 
 // Purge old performance logs prior to execution
-const logsDir = path.resolve('.logs');
-if (fs.existsSync(logsDir)) {
-  fs.rmSync(logsDir, { recursive: true, force: true });
-}
+purgeLogs();
 
 console.log(`\n> Executing Cypress Suite: ${suiteName || 'ALL SPECS'}\n`);
 child_process.execSync(`npx ${cypressCmd} ${specFlag}`, { stdio: 'inherit' });

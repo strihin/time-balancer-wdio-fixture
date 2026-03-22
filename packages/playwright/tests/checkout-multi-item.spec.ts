@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
 import { users } from '@fixtures/users';
 import { checkoutForms } from '@fixtures/checkout';
@@ -21,8 +21,8 @@ async function addThreeItems(page: import('@playwright/test').Page) {
   await page.locator(Inv.addFleeceJacket).click();
 }
 
-test.describe('Checkout – Multi-item', () => {
-  test.beforeEach(async ({ page }) => {
+describe('Checkout – Multi-item', () => {
+  beforeEach(async ({ page }) => {
     await login(page, users.glitch);
     await addThreeItems(page);
     await page.locator(Inv.cartLink).click();

@@ -1,4 +1,6 @@
 import fs from 'fs';
+import dns from 'node:dns';
+dns.setDefaultResultOrder('ipv4first');
 import { BASE_URL } from '@constants/index';
 import path from 'path';
 import { suites } from './src/config/suites';
@@ -21,8 +23,13 @@ if (suiteName && !suites[suiteName]) {
 }
 const activeSpecs: string[] = suiteName ? suites[suiteName] : ['./src/specs/**/*.spec.ts'];
 
-const chromeArgs = ['--no-sandbox', '--disable-dev-shm-usage'];
-if (headless) chromeArgs.unshift('--headless');
+const chromeArgs = [
+  '--no-sandbox',
+  '--disable-setuid-sandbox',
+  '--disable-dev-shm-usage',
+  '--disable-gpu',
+];
+if (headless) chromeArgs.unshift('--headless=new');
 
 export const config: WebdriverIO.Config = {
   runner: 'local',
@@ -38,7 +45,9 @@ export const config: WebdriverIO.Config = {
   capabilities: [
     {
       browserName: 'chrome',
-      'goog:chromeOptions': { args: chromeArgs },
+      'goog:chromeOptions': {
+        args: chromeArgs,
+      },
     },
   ],
 
@@ -49,9 +58,6 @@ export const config: WebdriverIO.Config = {
   bail: 0,
 
   baseUrl: BASE_URL,
-
-  // @wdio/mcp is available as dev dependency for AI-assisted development
-  // Run standalone: npx @wdio/mcp
 
   waitforTimeout: 10000,
 
