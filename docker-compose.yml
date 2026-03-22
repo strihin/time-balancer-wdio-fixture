@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  benchmark:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FRAMEWORK: ${FRAMEWORK:-playwright}
+    environment:
+      # Defaults to Playwright if no FRAMEWORK is specified
+      - FRAMEWORK=${FRAMEWORK:-playwright}
+      # Allows passing specific suites (e.g. SUITE=login), empty means runs all
+      - SUITE=${SUITE:-login}
+      # Forces headless test runners globally inside the docker container
+      - HEADLESS=true
+      # Map host secrets if needed (or pass them locally via terminal exports)
+      - SAUCE_USER=${SAUCE_USER}
+      - SAUCE_PASS=${SAUCE_PASS}
+    volumes:
+      # Map the generated logs out so standard local tools can access them
+      - ./packages/${FRAMEWORK:-playwright}/.logs:/app/packages/${FRAMEWORK:-playwright}/.logs
+    command: >
+      sh -c 'pnpm --filter @benchmarks/$$FRAMEWORK test $$SUITE'

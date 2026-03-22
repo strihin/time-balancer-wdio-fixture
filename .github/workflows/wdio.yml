@@ -1,0 +1,36 @@
+name: Run WebdriverIO Benchmarks
+
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Specific test suite to run (leave empty to run all)'
+        required: false
+        default: ''
+        type: string
+  repository_dispatch:
+    types: [run-webdriverio]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run WebdriverIO via Docker Compose
+        run: docker-compose up --build --exit-code-from benchmark
+        env:
+          FRAMEWORK: webdriverio
+          SUITE: ${{ inputs.suite }}
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_PASS: ${{ secrets.SAUCE_PASS }}
+
+      - name: Upload execution logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: webdriverio-logs
+          path: packages/webdriverio/.logs/
+          retention-days: 7
