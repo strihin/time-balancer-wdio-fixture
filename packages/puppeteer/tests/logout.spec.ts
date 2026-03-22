@@ -17,7 +17,7 @@ describe('Logout', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('burger menu button is visible', async () => {

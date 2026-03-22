@@ -15,7 +15,7 @@ describe('Sorting', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('default sort is Name (A to Z)', async () => {

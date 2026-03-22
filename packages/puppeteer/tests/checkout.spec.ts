@@ -8,11 +8,32 @@ import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors'
 
 const { firstName, lastName, postalCode } = checkoutForms.valid;
 
+async function setInputValue(page: Page, selector: string, value: string): Promise<void> {
+  await page.waitForSelector(selector, { visible: true });
+  await page.click(selector, { clickCount: 3 });
+  await page.$eval(
+    selector,
+    (el, val) => {
+      const input = el as HTMLInputElement;
+      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        'value',
+      )!.set!;
+      nativeInputValueSetter.call(input, val);
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    },
+    value,
+  );
+}
+
 async function fillCheckoutForm(page: Page) {
-  await page.type(CheckoutSel.firstName, firstName);
-  await page.type(CheckoutSel.lastName, lastName);
-  await page.type(CheckoutSel.postalCode, postalCode);
+  await setInputValue(page, CheckoutSel.firstName, firstName);
+  await setInputValue(page, CheckoutSel.lastName, lastName);
+  await setInputValue(page, CheckoutSel.postalCode, postalCode);
   await page.click(CheckoutSel.continueBtn);
+  // Await navigation to the overview page before returning
+  await page.waitForSelector(CheckoutSel.summaryContainer);
 }
 
 describe('Checkout', () => {
@@ -22,13 +43,13 @@ describe('Checkout', () => {
   beforeEach(async () => {
     browser = await launchBrowser();
     page = await browser.newPage();
-    await login(page, users.glitch);
+    await login(page, users.standard);
     await page.click(Inv.addBackpack);
     await page.click(Cart.link);
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('proceeds to checkout from cart', async () => {
@@ -51,6 +72,7 @@ describe('Checkout', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillCheckoutForm(page);
+    await page.waitForSelector(CheckoutSel.totalLabel);
     const total = await page.$(CheckoutSel.totalLabel);
     expect(total).not.toBeNull();
   });
@@ -59,6 +81,7 @@ describe('Checkout', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillCheckoutForm(page);
+    await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
     const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
     expect(header).toBe('Thank you for your order!');
@@ -68,7 +91,9 @@ describe('Checkout', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillCheckoutForm(page);
+    await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
+    await page.waitForSelector(CheckoutSel.backToProducts);
     await page.click(CheckoutSel.backToProducts);
     await page.waitForSelector(CheckoutSel.inventoryList);
     const list = await page.$(CheckoutSel.inventoryList);

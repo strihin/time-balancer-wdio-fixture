@@ -14,7 +14,7 @@ describe('Cart', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('cart is empty on first login', async () => {

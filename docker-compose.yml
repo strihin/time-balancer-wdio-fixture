@@ -11,7 +11,7 @@ services:
       # Defaults to Playwright if no FRAMEWORK is specified
       - FRAMEWORK=${FRAMEWORK:-playwright}
       # Allows passing specific suites (e.g. SUITE=login), empty means runs all
-      - SUITE=${SUITE:-login}
+      - SUITE=${SUITE}
       # Forces headless test runners globally inside the docker container
       - HEADLESS=true
       # Map host secrets if needed (or pass them locally via terminal exports)

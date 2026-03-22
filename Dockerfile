@@ -38,3 +38,6 @@ RUN if [ "$FRAMEWORK" = "webdriverio" ]; then \
 # Defaults
 ENV HEADLESS=true
 ENV DOCKER=true
+# Point WDIO at the system arm64 Chromium/Chromedriver from apt (skips runtime download)
+ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
+ENV CHROME_BIN=/usr/bin/chromium

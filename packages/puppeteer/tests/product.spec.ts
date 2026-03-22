@@ -13,7 +13,7 @@ describe('Product Detail', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('opens product detail page on item click', async () => {

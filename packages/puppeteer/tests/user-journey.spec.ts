@@ -22,7 +22,7 @@ describe('User Journey', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('browse product detail then add to cart and checkout', async () => {
@@ -33,7 +33,9 @@ describe('User Journey', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(Checkout.infoContainer);
     await fillForm(page);
+    await page.waitForSelector(Checkout.finishBtn);
     await page.click(Checkout.finishBtn);
+    await page.waitForSelector(Checkout.completeHeader);
     const header = await page.$eval(Checkout.completeHeader, el => el.textContent);
     expect(header).toBe('Thank you for your order!');
   });
@@ -53,8 +55,9 @@ describe('User Journey', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(Checkout.infoContainer);
     await fillForm(page);
+    await page.waitForSelector(Checkout.finishBtn);
     await page.click(Checkout.finishBtn);
-    const header = await page.$(Checkout.completeHeader);
+    const header = await page.waitForSelector(Checkout.completeHeader);
     expect(header).not.toBeNull();
   });
 
@@ -68,7 +71,9 @@ describe('User Journey', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(Checkout.infoContainer);
     await fillForm(page);
+    await page.waitForSelector(Checkout.finishBtn);
     await page.click(Checkout.finishBtn);
+    await page.waitForSelector(Checkout.completeHeader);
     const header = await page.$eval(Checkout.completeHeader, el => el.textContent);
     expect(header).toBe('Thank you for your order!');
   });
@@ -79,7 +84,9 @@ describe('User Journey', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(Checkout.infoContainer);
     await fillForm(page);
+    await page.waitForSelector(Checkout.finishBtn);
     await page.click(Checkout.finishBtn);
+    await page.waitForSelector(Checkout.backToProducts);
     await page.click(Checkout.backToProducts);
     await page.waitForSelector(Inv.list);
     const items = await page.$$(Inv.item);
@@ -92,7 +99,9 @@ describe('User Journey', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(Checkout.infoContainer);
     await fillForm(page);
+    await page.waitForSelector(Checkout.finishBtn);
     await page.click(Checkout.finishBtn);
+    await page.waitForSelector(Checkout.backToProducts);
     await page.click(Checkout.backToProducts);
     await page.click(Nav.burgerMenuBtn);
     await clickMenuLink(page, Nav.logoutLink);

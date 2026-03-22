@@ -13,7 +13,7 @@ describe('Inventory', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('shows the inventory list after login', async () => {

@@ -46,12 +46,17 @@ export const config: WebdriverIO.Config = {
     {
       browserName: 'chrome',
       'goog:chromeOptions': {
+        binary: process.env.CHROME_BIN,
         args: chromeArgs,
+      },
+      'wdio:chromedriverOptions': {
+        verbose: true,
+        log: `${logsDir}/chromedriver.log`,
       },
     },
   ],
 
-  logLevel: 'info',
+  logLevel: 'trace',
 
   outputDir: logsDir,
 
@@ -79,5 +84,8 @@ export const config: WebdriverIO.Config = {
 
   onPrepare() {
     fs.mkdirSync(logsDir, { recursive: true });
+    console.log('[WDIO] HEADLESS:', process.env.HEADLESS);
+    console.log('[WDIO] DOCKER:', process.env.DOCKER);
+    console.log('[WDIO] chromeArgs:', chromeArgs);
   },
 };

@@ -1,25 +1,10 @@
 import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-async function fillForm(page: Page) {
-  await page.type(CheckoutSel.firstName, firstName);
-  await page.type(CheckoutSel.lastName, lastName);
-  await page.type(CheckoutSel.postalCode, postalCode);
-  await page.click(CheckoutSel.continueBtn);
-}
-
-async function addThreeItems(page: Page) {
-  await page.click(Inv.addBackpack);
-  await page.click(Inv.addBikeLight);
-  await page.click(Inv.addFleeceJacket);
-}
+import { addThreeItems, fillForm } from '@support/fillForm';
 
 describe('Checkout – Multi-item', () => {
   let browser: Browser;
@@ -28,13 +13,13 @@ describe('Checkout – Multi-item', () => {
   beforeEach(async () => {
     browser = await launchBrowser();
     page = await browser.newPage();
-    await login(page, users.glitch);
+    await login(page, users.standard);
     await addThreeItems(page);
     await page.click(Inv.cartLink);
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('cart shows 3 items after adding three products', async () => {
@@ -74,6 +59,7 @@ describe('Checkout – Multi-item', () => {
     await page.click(Cart.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
+    await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
     const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
     expect(header).toBe('Thank you for your order!');

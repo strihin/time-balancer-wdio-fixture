@@ -15,7 +15,7 @@ describe('Login', () => {
   });
 
   afterEach(async () => {
-    await browser.close();
+    await browser?.close();
   });
 
   it('logs in with valid credentials', async () => {
