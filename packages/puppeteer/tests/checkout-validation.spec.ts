@@ -3,25 +3,7 @@ import { launchBrowser, login } from '@support/auth';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-
-async function setInputValue(page: Page, selector: string, value: string): Promise<void> {
-  await page.waitForSelector(selector, { visible: true });
-  await page.click(selector, { clickCount: 3 });
-  await page.$eval(
-    selector,
-    (el, val) => {
-      const input = el as HTMLInputElement;
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-        window.HTMLInputElement.prototype,
-        'value',
-      )!.set!;
-      nativeInputValueSetter.call(input, val);
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    },
-    value,
-  );
-}
+import { setInputValue } from '@support/checkout';
 
 describe('Checkout – Form Validation', () => {
   let browser: Browser;

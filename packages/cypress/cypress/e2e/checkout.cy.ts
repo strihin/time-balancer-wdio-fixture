@@ -1,18 +1,9 @@
 import { login } from '@support/auth';
+import { fillCheckoutForm } from '../support/checkout';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-function fillCheckoutForm() {
-  cy.get(CheckoutSel.firstName).type(firstName);
-  cy.get(CheckoutSel.lastName).type(lastName);
-  cy.get(CheckoutSel.postalCode).type(postalCode);
-  cy.get(CheckoutSel.continueBtn).click();
-}
 
 describe('Checkout', () => {
   beforeEach(() => {

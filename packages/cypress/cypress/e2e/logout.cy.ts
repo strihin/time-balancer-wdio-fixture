@@ -33,9 +33,7 @@ describe('Logout', () => {
   it('can re-login after logout', () => {
     cy.get(NavSel.burgerMenuBtn).click();
     cy.get(NavSel.logoutLink).click();
-    cy.get(LoginSel.username).type(users.standard.username);
-    cy.get(LoginSel.password).type(users.standard.password);
-    cy.get(LoginSel.loginButton).click();
+    login(users.standard);
     cy.get(NavSel.inventoryList).should('be.visible');
   });
 });

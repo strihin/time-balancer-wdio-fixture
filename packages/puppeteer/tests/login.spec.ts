@@ -1,4 +1,5 @@
-import puppeteer, { type Browser, type Page } from 'puppeteer';
+import { type Browser, type Page } from 'puppeteer';
+
 import { launchBrowser, login } from '@support/auth';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';

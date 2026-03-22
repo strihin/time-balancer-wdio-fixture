@@ -1,21 +1,12 @@
 import { login } from '@support/auth';
+import { fillCheckoutForm } from '@support/checkout';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as Checkout } from '@selectors/checkout.selectors';
 import { ProductSelectors as Product } from '@selectors/product.selectors';
 import { NavSelectors as Nav } from '@selectors/nav.selectors';
 import { LoginSelectors as Login } from '@selectors/login.selectors';
-
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-async function fillForm(): Promise<void> {
-  await $(Checkout.firstName).setValue(firstName);
-  await $(Checkout.lastName).setValue(lastName);
-  await $(Checkout.postalCode).setValue(postalCode);
-  await $(Checkout.continueBtn).click();
-}
 
 describe('User Journey', () => {
   beforeEach(async () => {
@@ -28,7 +19,7 @@ describe('User Journey', () => {
     await $(Product.addToCartBtn).click();
     await $(Inv.cartLink).click();
     await $(Cart.checkout).click();
-    await fillForm();
+    await fillCheckoutForm();
     await $(Checkout.finishBtn).click();
     await expect($(Checkout.completeHeader)).toHaveText('Thank you for your order!');
   });
@@ -43,7 +34,7 @@ describe('User Journey', () => {
     const items = await $$(Cart.item);
     expect(items.length).toBe(2);
     await $(Cart.checkout).click();
-    await fillForm();
+    await fillCheckoutForm();
     await $(Checkout.finishBtn).click();
     await expect($(Checkout.completeHeader)).toBeDisplayed();
   });
@@ -56,7 +47,7 @@ describe('User Journey', () => {
     const items = await $$(Cart.item);
     expect(items.length).toBe(1);
     await $(Cart.checkout).click();
-    await fillForm();
+    await fillCheckoutForm();
     await $(Checkout.finishBtn).click();
     await expect($(Checkout.completeHeader)).toHaveText('Thank you for your order!');
   });
@@ -65,7 +56,7 @@ describe('User Journey', () => {
     await $(Inv.addBackpack).click();
     await $(Inv.cartLink).click();
     await $(Cart.checkout).click();
-    await fillForm();
+    await fillCheckoutForm();
     await $(Checkout.finishBtn).click();
     await $(Checkout.backToProducts).click();
     await expect($(Inv.list)).toBeDisplayed();
@@ -77,7 +68,7 @@ describe('User Journey', () => {
     await $(Inv.addFleeceJacket).click();
     await $(Inv.cartLink).click();
     await $(Cart.checkout).click();
-    await fillForm();
+    await fillCheckoutForm();
     await $(Checkout.finishBtn).click();
     await $(Checkout.backToProducts).click();
     await $(Nav.burgerMenuBtn).click();

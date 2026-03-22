@@ -4,7 +4,8 @@ import { NavSelectors as NavSel } from '@selectors/nav.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
 import { BASE_URL } from '@constants/index';
-import { clickMenuLink } from '@support/clickMenuLink';
+import { clickMenuLink } from '@support/click-menu-link';
+
 
 describe('Logout', () => {
   let browser: Browser;
@@ -53,11 +54,9 @@ describe('Logout', () => {
     await page.click(NavSel.burgerMenuBtn);
     await clickMenuLink(page, NavSel.logoutLink);
     await page.waitForSelector(LoginSel.username);
-    await page.type(LoginSel.username, users.standard.username);
-    await page.type(LoginSel.password, users.standard.password);
-    await page.click(LoginSel.loginButton);
-    await page.waitForSelector(NavSel.inventoryList);
+    await login(page, users.standard);
     const list = await page.$(NavSel.inventoryList);
     expect(list).not.toBeNull();
   });
+
 });

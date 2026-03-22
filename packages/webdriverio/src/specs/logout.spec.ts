@@ -34,9 +34,8 @@ describe('Logout', () => {
   it('can re-login after logout', async () => {
     await $(NavSel.burgerMenuBtn).click();
     await $(NavSel.logoutLink).click();
-    await $(LoginSel.username).setValue(users.standard.username);
-    await $(LoginSel.password).setValue(users.standard.password);
-    await $(LoginSel.loginButton).click();
+    await login(users.standard);
     await expect($(NavSel.inventoryList)).toBeDisplayed();
   });
 });
+

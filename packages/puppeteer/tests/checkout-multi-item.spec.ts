@@ -4,7 +4,10 @@ import { users } from '@fixtures/users';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { addThreeItems, fillForm } from '@support/fillForm';
+import { addThreeItems } from '@support/inventory';
+import { fillForm } from '@support/fill-form';
+
+
 
 describe('Checkout – Multi-item', () => {
   let browser: Browser;

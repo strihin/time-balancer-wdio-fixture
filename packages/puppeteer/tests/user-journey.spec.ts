@@ -8,8 +8,9 @@ import { ProductSelectors as Product } from '@selectors/product.selectors';
 import { NavSelectors as Nav } from '@selectors/nav.selectors';
 import { LoginSelectors as Login } from '@selectors/login.selectors';
 
-import { fillForm } from '@support/fillForm';
-import { clickMenuLink } from '@support/clickMenuLink';
+import { fillForm } from '@support/fill-form';
+import { clickMenuLink } from '@support/click-menu-link';
+
 
 describe('User Journey', () => {
   let browser: Browser;

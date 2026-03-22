@@ -1,18 +1,9 @@
 import { login } from '@support/auth';
+import { fillCheckoutForm } from '@support/checkout';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as Inv } from '@selectors/inventory.selectors';
 import { CartSelectors as Cart } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-async function fillCheckoutForm(): Promise<void> {
-  await $(CheckoutSel.firstName).setValue(firstName);
-  await $(CheckoutSel.lastName).setValue(lastName);
-  await $(CheckoutSel.postalCode).setValue(postalCode);
-  await $(CheckoutSel.continueBtn).click();
-}
 
 // performance_glitch_user adds artificial delays per page load → ~10 s per step
 describe('Checkout', () => {
