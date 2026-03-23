@@ -46,7 +46,7 @@ jobs:
           fi
 
       - name: Run Framework via Docker Compose
-        run: docker-compose up --build --exit-code-from benchmark
+        run: docker compose up --build --exit-code-from benchmark
         env:
           FRAMEWORK: ${{ steps.vars.outputs.framework }}
           SUITE: ${{ steps.vars.outputs.suite }}

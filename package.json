@@ -6,10 +6,10 @@
   },
   "packageManager": "pnpm@9.15.4",
   "scripts": {
-    "cypress:test": "FRAMEWORK=cypress docker-compose up --build --exit-code-from benchmark",
-    "playwright:test": "FRAMEWORK=playwright docker-compose up --build --exit-code-from benchmark",
-    "puppeteer:test": "FRAMEWORK=puppeteer docker-compose up --build --exit-code-from benchmark",
-    "webdriverio:test": "FRAMEWORK=webdriverio docker-compose up --build --exit-code-from benchmark",
+    "cypress:test": "FRAMEWORK=cypress docker compose up --build --exit-code-from benchmark",
+    "playwright:test": "FRAMEWORK=playwright docker compose up --build --exit-code-from benchmark",
+    "puppeteer:test": "FRAMEWORK=puppeteer docker compose up --build --exit-code-from benchmark",
+    "webdriverio:test": "FRAMEWORK=webdriverio docker compose up --build --exit-code-from benchmark",
     "lint": "biome lint .",
     "format": "biome format . --write",
     "check": "biome check . --apply"
