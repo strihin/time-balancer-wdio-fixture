@@ -1,5 +1,5 @@
-import { login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { login } from '@support/auth';
 
 describe('Inventory', () => {
   beforeEach(async () => {

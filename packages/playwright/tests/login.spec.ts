@@ -1,7 +1,7 @@
-import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
-import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
-import { users } from '@fixtures/users';
 import { LOCKED_OUT_MSG } from '@constants/index';
+import { users } from '@fixtures/users';
+import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { beforeEach, describe, expect, test } from '@support/test';
 
 describe('Login', () => {
   beforeEach(async ({ page }) => {

@@ -14,10 +14,13 @@ const config: Config = {
   },
   reporters: [
     'default',
-    ['jest-junit', {
-      outputDirectory: '.logs',
-      outputName: 'results.xml',
-    }],
+    [
+      'jest-junit',
+      {
+        outputDirectory: '.logs',
+        outputName: 'results.xml',
+      },
+    ],
   ],
   testTimeout: 60000,
   maxWorkers: 1,

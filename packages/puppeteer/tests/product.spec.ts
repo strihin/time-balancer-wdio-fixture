@@ -1,6 +1,6 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { launchBrowser, login } from '@support/auth';
+import type { Browser, Page } from 'puppeteer';
 
 describe('Product Detail', () => {
   let browser: Browser;
@@ -24,10 +24,10 @@ describe('Product Detail', () => {
   });
 
   it('product detail shows correct name', async () => {
-    const name = await page.$eval(ProductSel.itemName, el => el.textContent ?? '');
+    const name = await page.$eval(ProductSel.itemName, (el) => el.textContent ?? '');
     await page.click(ProductSel.itemName);
     await page.waitForSelector(ProductSel.detailName);
-    const detailName = await page.$eval(ProductSel.detailName, el => el.textContent ?? '');
+    const detailName = await page.$eval(ProductSel.detailName, (el) => el.textContent ?? '');
     expect(detailName).toBe(name);
   });
 
@@ -51,7 +51,7 @@ describe('Product Detail', () => {
     await page.click(ProductSel.itemName);
     await page.waitForSelector(ProductSel.addToCartBtn);
     await page.click(ProductSel.addToCartBtn);
-    const badge = await page.$eval(ProductSel.cartBadge, el => el.textContent);
+    const badge = await page.$eval(ProductSel.cartBadge, (el) => el.textContent);
     expect(badge).toBe('1');
   });
 });

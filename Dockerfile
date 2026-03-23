@@ -1,10 +1,20 @@
+# syntax=docker/dockerfile:1
 FROM node:20-bookworm-slim
 
 # Receive the target framework from docker-compose build args
 ARG FRAMEWORK=playwright
 
+# Configure pnpm and browser cache paths
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+ENV CYPRESS_CACHE_FOLDER=/cypress-cache
+
 # Install universal system dependencies required by Cypress, Puppeteer, Playwright & WebdriverIO
-RUN apt-get update && apt-get install -y \
+# Using BuildKit cache mount for apt
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y \
     libglib2.0-0 libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 \
     libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
     libxfixes3 libxrandr2 libgbm1 libasound2 \
@@ -23,14 +33,21 @@ COPY packages/${FRAMEWORK}/package.json ./packages/${FRAMEWORK}/
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Install project dependencies explicitly filtered
-RUN pnpm install --filter @benchmarks/${FRAMEWORK}... --frozen-lockfile
+# Using BuildKit cache mount for pnpm store
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --filter @benchmarks/${FRAMEWORK}... --frozen-lockfile
 
 # Copy only the relevant framework source code
 COPY packages/shared ./packages/shared/
 COPY packages/${FRAMEWORK} ./packages/${FRAMEWORK}/
 
-# Pre-install framework-specific browsers
-RUN if [ "$FRAMEWORK" = "playwright" ]; then pnpm --filter @benchmarks/playwright exec playwright install --with-deps; fi
+# Pre-install framework-specific browsers with cache mounts
+RUN --mount=type=cache,id=playwright,target=/ms-playwright \
+    if [ "$FRAMEWORK" = "playwright" ]; then pnpm --filter @benchmarks/playwright exec playwright install --with-deps; fi
+
+RUN --mount=type=cache,id=cypress,target=/cypress-cache \
+    if [ "$FRAMEWORK" = "cypress" ]; then pnpm --filter @benchmarks/cypress exec cypress install; fi
+
 RUN if [ "$FRAMEWORK" = "webdriverio" ]; then \
     cd /app/packages/webdriverio && \
     pnpm exec wdio install browser chrome; fi

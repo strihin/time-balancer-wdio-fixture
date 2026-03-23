@@ -5,4 +5,3 @@ export const CHECKOUT_SUCCESS_MSG = 'Thank you for your order!';
 
 /** Substring present in the error message shown when a locked-out user tries to log in. */
 export const LOCKED_OUT_MSG = 'locked out';
-

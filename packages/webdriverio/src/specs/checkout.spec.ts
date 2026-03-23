@@ -1,10 +1,10 @@
-import { login } from '@support/auth';
-import { fillCheckoutForm } from '@support/checkout';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 import { users } from '@fixtures/users';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { login } from '@support/auth';
+import { fillCheckoutForm } from '@support/checkout';
 
 // performance_glitch_user adds artificial delays per page load → ~10 s per step
 describe('Checkout', () => {

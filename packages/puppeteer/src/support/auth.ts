@@ -1,6 +1,6 @@
-import puppeteer, { type Browser, type Page } from 'puppeteer';
-import { users, type User } from '@fixtures/users';
+import { type User, users } from '@fixtures/users';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import puppeteer, { type Browser, type Page } from 'puppeteer';
 
 import { BASE_URL } from '@constants/index';
 
@@ -12,11 +12,21 @@ export async function launchBrowser(): Promise<Browser> {
   return puppeteer.launch({
     headless: process.env.HEADLESS !== 'false',
     executablePath: process.env.CHROME_BIN || undefined,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu', '--ignore-certificate-errors'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--ignore-certificate-errors',
+    ],
   });
 }
 
-export async function login(page: Page, user: User = users.standard, waitForInventory = true): Promise<void> {
+export async function login(
+  page: Page,
+  user: User = users.standard,
+  waitForInventory = true,
+): Promise<void> {
   await page.goto(BASE_URL);
   await page.evaluate(() => localStorage.clear());
   await page.goto(BASE_URL);

@@ -1,12 +1,12 @@
-import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { users } from '@fixtures/users';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
+import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { login } from '@support/auth';
 import { fillCheckoutForm } from '@support/checkout';
 import { addThreeItems } from '@support/inventory';
-import { users } from '@fixtures/users';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
-import { CartSelectors as CartSel } from '@selectors/cart.selectors';
-import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { beforeEach, describe, expect, test } from '@support/test';
 import { parseCurrencyText } from '@utils/price';
 
 describe('Checkout – Multi-item', () => {
@@ -30,7 +30,7 @@ describe('Checkout – Multi-item', () => {
   test('item total on overview matches sum of item prices', async ({ page }) => {
     await page.locator(CartSel.checkout).click();
     await fillCheckoutForm(page);
-    const text = await page.locator(CheckoutSel.itemTotal).textContent() ?? '';
+    const text = (await page.locator(CheckoutSel.itemTotal).textContent()) ?? '';
     const itemTotal = parseCurrencyText(text);
     expect(itemTotal).toBeGreaterThan(0);
   });
@@ -38,7 +38,7 @@ describe('Checkout – Multi-item', () => {
   test('tax is calculated on overview', async ({ page }) => {
     await page.locator(CartSel.checkout).click();
     await fillCheckoutForm(page);
-    const text = await page.locator(CheckoutSel.taxLabel).textContent() ?? '';
+    const text = (await page.locator(CheckoutSel.taxLabel).textContent()) ?? '';
     const tax = parseCurrencyText(text);
     expect(tax).toBeGreaterThan(0);
   });

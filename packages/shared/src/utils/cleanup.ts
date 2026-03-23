@@ -1,15 +1,15 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import { existsSync, readdirSync, rmSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 
 /**
- * Erases the contents of the local .logs directory prior to executing testing suites, 
+ * Erases the contents of the local .logs directory prior to executing testing suites,
  * safely sidestepping Docker volume mount point destruction (EBUSY).
  */
 export function purgeLogs() {
-  const logsDir = path.resolve('.logs');
-  if (fs.existsSync(logsDir)) {
-    fs.readdirSync(logsDir).forEach(file => {
-      fs.rmSync(path.join(logsDir, file), { recursive: true, force: true });
-    });
+  const logsDir = resolve('.logs');
+  if (existsSync(logsDir)) {
+    for (const file of readdirSync(logsDir)) {
+      rmSync(join(logsDir, file), { recursive: true, force: true });
+    }
   }
 }

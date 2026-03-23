@@ -1,8 +1,8 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { sortOptions } from '@fixtures/checkout';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { launchBrowser, login } from '@support/auth';
 import { parseCurrencyText } from '@utils/price';
+import type { Browser, Page } from 'puppeteer';
 
 describe('Sorting', () => {
   let browser: Browser;
@@ -20,27 +20,35 @@ describe('Sorting', () => {
   });
 
   it('default sort is Name (A to Z)', async () => {
-    const names = await page.$$eval(InventorySel.itemName, els => els.map(el => el.textContent ?? ''));
+    const names = await page.$$eval(InventorySel.itemName, (els) =>
+      els.map((el) => el.textContent ?? ''),
+    );
     expect(names).toEqual([...names].sort());
   });
 
   it('sorts by Name (Z to A)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.nameZtoA.value);
-    const names = await page.$$eval(InventorySel.itemName, els => els.map(el => el.textContent ?? ''));
+    const names = await page.$$eval(InventorySel.itemName, (els) =>
+      els.map((el) => el.textContent ?? ''),
+    );
     expect(names).toEqual([...names].sort().reverse());
   });
 
   it('sorts by Price (low to high)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.priceLowToHigh.value);
-    const texts = await page.$$eval(InventorySel.itemPrice, els => els.map(el => el.textContent ?? ''));
-    const vals = texts.map(t => parseCurrencyText(t));
+    const texts = await page.$$eval(InventorySel.itemPrice, (els) =>
+      els.map((el) => el.textContent ?? ''),
+    );
+    const vals = texts.map((t) => parseCurrencyText(t));
     expect(vals).toEqual([...vals].sort((a, b) => a - b));
   });
 
   it('sorts by Price (high to low)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.priceHighToLow.value);
-    const texts = await page.$$eval(InventorySel.itemPrice, els => els.map(el => el.textContent ?? ''));
-    const vals = texts.map(t => parseCurrencyText(t));
+    const texts = await page.$$eval(InventorySel.itemPrice, (els) =>
+      els.map((el) => el.textContent ?? ''),
+    );
+    const vals = texts.map((t) => parseCurrencyText(t));
     expect(vals).toEqual([...vals].sort((a, b) => b - a));
   });
 

@@ -1,6 +1,6 @@
-import { type Page } from '@playwright/test';
-import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { checkoutForms } from '@fixtures/checkout';
+import type { Page } from '@playwright/test';
+import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 
 const { firstName, lastName, postalCode } = checkoutForms.valid;
 

@@ -4,5 +4,5 @@
  * "Tax: $2.40", etc.
  */
 export function parseCurrencyText(text: string): number {
-  return parseFloat(text.replace(/[^0-9.]/g, ''));
+  return Number.parseFloat(text.replace(/[^0-9.]/g, ''));
 }

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      },
+      "style": {
+        "useImportType": "error",
+        "noNamespaceImport": "warn",
+        "useSingleVarDeclarator": "error",
+        "useConst": "error",
+        "noNonNullAssertion": "warn"
+      },
+      "complexity": {
+        "noForEach": "error"
+      },
+      "nursery": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "../../shared": "Use @utils, @selectors, or @fixtures aliases instead of relative paths to shared package",
+              "../support": "Use @support alias"
+            }
+          }
+        }
+      }
+    }
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}

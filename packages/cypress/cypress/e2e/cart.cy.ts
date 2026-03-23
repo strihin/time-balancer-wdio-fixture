@@ -1,6 +1,6 @@
-import { login } from '@support/auth';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { login } from '@support/auth';
 
 describe('Cart', () => {
   beforeEach(() => {

@@ -1,7 +1,7 @@
+import { sortOptions } from '@fixtures/checkout';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { login } from '@support/auth';
 import { getItemNames, getItemPrices } from '@support/sorting';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
-import { sortOptions } from '@fixtures/checkout';
 
 describe('Sorting', () => {
   beforeEach(async () => {

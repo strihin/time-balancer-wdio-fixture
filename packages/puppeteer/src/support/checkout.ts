@@ -1,6 +1,6 @@
-import type { Page } from 'puppeteer';
-import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { checkoutForms } from '@fixtures/checkout';
+import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import type { Page } from 'puppeteer';
 
 const { firstName, lastName, postalCode } = checkoutForms.valid;
 
@@ -18,13 +18,16 @@ export async function setInputValue(page: Page, selector: string, value: string)
     selector,
     (el, val) => {
       const input = el as HTMLInputElement;
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      const descriptor = Object.getOwnPropertyDescriptor(
         window.HTMLInputElement.prototype,
         'value',
-      )!.set!;
-      nativeInputValueSetter.call(input, val);
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.dispatchEvent(new Event('change', { bubbles: true }));
+      );
+      const nativeInputValueSetter = descriptor?.set;
+      if (nativeInputValueSetter) {
+        nativeInputValueSetter.call(input, val);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     },
     value,
   );

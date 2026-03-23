@@ -1,6 +1,6 @@
-import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
-import { login } from '@support/auth';
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { login } from '@support/auth';
+import { beforeEach, describe, expect, test } from '@support/test';
 
 describe('Product Detail', () => {
   beforeEach(async ({ page }) => {
@@ -15,7 +15,7 @@ describe('Product Detail', () => {
   test('product detail shows correct name', async ({ page }) => {
     const name = await page.locator(ProductSel.itemName).first().textContent();
     await page.locator(ProductSel.itemName).first().click();
-    await expect(page.locator(ProductSel.detailName)).toHaveText(name!);
+    await expect(page.locator(ProductSel.detailName)).toHaveText(name ?? '');
   });
 
   test('back button returns to inventory', async ({ page }) => {

@@ -1,7 +1,7 @@
-import { login } from '@support/auth';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { login } from '@support/auth';
 
 describe('Checkout – Form Validation', () => {
   beforeEach(() => {

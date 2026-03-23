@@ -1,9 +1,9 @@
-import { type Browser, type Page } from 'puppeteer';
+import type { Browser, Page } from 'puppeteer';
 
-import { launchBrowser, login } from '@support/auth';
-import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { BASE_URL, LOCKED_OUT_MSG } from '@constants/index';
 import { users } from '@fixtures/users';
-import { BASE_URL, LOCKED_OUT_MSG} from '@constants/index';
+import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { launchBrowser, login } from '@support/auth';
 
 describe('Login', () => {
   let browser: Browser;
@@ -28,7 +28,7 @@ describe('Login', () => {
   it('shows error for locked-out user', async () => {
     await login(page, users.locked, false);
     await page.waitForSelector(LoginSel.error);
-    const text = await page.$eval(LoginSel.error, el => el.textContent ?? '');
+    const text = await page.$eval(LoginSel.error, (el) => el.textContent ?? '');
     expect(text).toContain(LOCKED_OUT_MSG);
   });
 

@@ -1,4 +1,4 @@
-import * as child_process from 'child_process';
+import { execSync } from 'node:child_process';
 import { purgeLogs } from '@utils/cleanup';
 import { suites } from './config/suites';
 
@@ -14,7 +14,9 @@ if (suiteArg) {
 } else if (userArgs.length > 0) {
   const maybeSuite = userArgs.find((arg: string) => !arg.startsWith('-'));
   if (maybeSuite) {
-    console.error(`\nUnknown suite: "${maybeSuite}"\nAvailable: ${Object.keys(suites).join(', ')}\n`);
+    console.error(
+      `\nUnknown suite: "${maybeSuite}"\nAvailable: ${Object.keys(suites).join(', ')}\n`,
+    );
     process.exit(1);
   }
 }
@@ -25,10 +27,11 @@ const specPattern = suiteName ? suites[suiteName].join(' ') : '';
 // Build execution command
 // ui mode uses --verbose for detailed output; jest has no interactive GUI
 const jestFlags = mode === 'ui' ? '--verbose' : '--silent';
-const jestCmd = `jest ${jestFlags} --config jest.config.ts`;
 
 // Purge old performance logs prior to execution
 purgeLogs();
 
 console.log(`\n> Executing Puppeteer Suite: ${suiteName || 'ALL SPECS'}\n`);
-child_process.execSync(`./node_modules/.bin/jest ${jestFlags} --config jest.config.ts ${specPattern}`, { stdio: 'inherit' });
+execSync(`./node_modules/.bin/jest ${jestFlags} --config jest.config.ts ${specPattern}`, {
+  stdio: 'inherit',
+});

@@ -1,6 +1,6 @@
-import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
-import { login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { login } from '@support/auth';
+import { beforeEach, describe, expect, test } from '@support/test';
 
 describe('Inventory', () => {
   beforeEach(async ({ page }) => {

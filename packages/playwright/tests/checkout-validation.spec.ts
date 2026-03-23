@@ -1,8 +1,8 @@
-import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
-import { login } from '@support/auth';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { login } from '@support/auth';
+import { beforeEach, describe, expect, test } from '@support/test';
 
 describe('Checkout – Form Validation', () => {
   beforeEach(async ({ page }) => {

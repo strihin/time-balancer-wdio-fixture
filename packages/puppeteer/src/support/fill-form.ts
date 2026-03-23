@@ -5,4 +5,3 @@ import { fillCheckoutForm } from '@support/checkout';
  * Fills the checkout step-1 form and waits for the overview page.
  */
 export { fillCheckoutForm as fillForm };
-

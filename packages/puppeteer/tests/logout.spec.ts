@@ -1,11 +1,10 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
-import { NavSelectors as NavSel } from '@selectors/nav.selectors';
-import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
-import { users } from '@fixtures/users';
 import { BASE_URL } from '@constants/index';
+import { users } from '@fixtures/users';
+import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { launchBrowser, login } from '@support/auth';
 import { clickMenuLink } from '@support/click-menu-link';
-
+import type { Browser, Page } from 'puppeteer';
 
 describe('Logout', () => {
   let browser: Browser;
@@ -58,5 +57,4 @@ describe('Logout', () => {
     const list = await page.$(NavSel.inventoryList);
     expect(list).not.toBeNull();
   });
-
 });

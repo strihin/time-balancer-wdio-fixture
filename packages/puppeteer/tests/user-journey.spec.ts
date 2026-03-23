@@ -1,17 +1,16 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
 import { users } from '@fixtures/users';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
-import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { launchBrowser, login } from '@support/auth';
+import type { Browser, Page } from 'puppeteer';
 
-import { fillForm } from '@support/fill-form';
-import { clickMenuLink } from '@support/click-menu-link';
 import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
-
+import { clickMenuLink } from '@support/click-menu-link';
+import { fillForm } from '@support/fill-form';
 
 describe('User Journey', () => {
   let browser: Browser;
@@ -38,7 +37,7 @@ describe('User Journey', () => {
     await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
     await page.waitForSelector(CheckoutSel.completeHeader);
-    const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
+    const header = await page.$eval(CheckoutSel.completeHeader, (el) => el.textContent);
     expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 
@@ -49,7 +48,7 @@ describe('User Journey', () => {
     await page.waitForSelector(InventorySel.addBikeLight);
     await page.click(InventorySel.addBikeLight);
     await page.waitForSelector(InventorySel.cartBadge);
-    const badge = await page.$eval(InventorySel.cartBadge, el => el.textContent);
+    const badge = await page.$eval(InventorySel.cartBadge, (el) => el.textContent);
     expect(badge).toBe('2');
     await page.click(InventorySel.cartLink);
     const items = await page.$$(CartSel.item);
@@ -76,7 +75,7 @@ describe('User Journey', () => {
     await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
     await page.waitForSelector(CheckoutSel.completeHeader);
-    const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
+    const header = await page.$eval(CheckoutSel.completeHeader, (el) => el.textContent);
     expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 

@@ -1,5 +1,5 @@
-import { Page } from '@playwright/test';
-import { users, type User } from '@fixtures/users';
+import { type User, users } from '@fixtures/users';
+import type { Page } from '@playwright/test';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 
 export const SAUCE_USER = users.standard.username;

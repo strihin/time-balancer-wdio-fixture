@@ -1,4 +1,4 @@
-import { type Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 
 /**

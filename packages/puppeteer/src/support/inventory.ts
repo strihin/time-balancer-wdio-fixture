@@ -1,5 +1,5 @@
-import type { Page } from 'puppeteer';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import type { Page } from 'puppeteer';
 
 /**
  * Adds three items (Backpack, Bike Light, Fleece Jacket) to the cart

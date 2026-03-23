@@ -1,8 +1,8 @@
-import fs from 'fs';
 import dns from 'node:dns';
+import fs from 'node:fs';
 dns.setDefaultResultOrder('ipv4first');
+import path from 'node:path';
 import { BASE_URL } from '@constants/index';
-import path from 'path';
 import { suites } from './src/config/suites';
 
 const headless = process.env.HEADLESS !== 'false';
@@ -11,7 +11,7 @@ const logsDir = path.resolve('.logs');
 let suiteName = process.env.SUITE;
 
 if (!suiteName) {
-  const argSuite = process.argv.find(arg => suites[arg]);
+  const argSuite = process.argv.find((arg) => suites[arg]);
   if (argSuite) {
     suiteName = argSuite;
   }

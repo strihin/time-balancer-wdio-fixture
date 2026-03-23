@@ -1,5 +1,5 @@
-import { defineConfig } from "cypress";
-import { BASE_URL } from "@constants/index";
+import { BASE_URL } from '@constants/index';
+import { defineConfig } from 'cypress';
 
 // Chromium browser launch args to bypass macOS 15 GPU sandbox crashes
 // in headed mode. Extracted for clarity — see src/config/browser.ts for docs.
@@ -14,13 +14,13 @@ export default defineConfig({
   reporter: 'junit',
   reporterOptions: {
     mochaFile: '.logs/results-[hash].xml',
-    toConsole: false
+    toConsole: false,
   },
   e2e: {
     chromeWebSecurity: false,
     experimentalWebKitSupport: true,
     baseUrl: BASE_URL,
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on, _config) {
       on('before:browser:launch', (browser, launchOptions) => {
         if (browser.family === 'chromium') {
           launchOptions.args.push(...chromiumLaunchArgs);
@@ -28,7 +28,7 @@ export default defineConfig({
         }
       });
     },
-    specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
-    supportFile: "cypress/support/e2e.ts"
+    specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+    supportFile: 'cypress/support/e2e.ts',
   },
 });

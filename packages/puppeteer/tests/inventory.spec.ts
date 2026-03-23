@@ -1,6 +1,6 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { launchBrowser, login } from '@support/auth';
+import type { Browser, Page } from 'puppeteer';
 
 describe('Inventory', () => {
   let browser: Browser;
@@ -32,14 +32,14 @@ describe('Inventory', () => {
     expect(names).toHaveLength(6);
     expect(prices).toHaveLength(6);
     for (const priceEl of prices) {
-      const text = await priceEl.evaluate(el => el.textContent ?? '');
+      const text = await priceEl.evaluate((el) => el.textContent ?? '');
       expect(text).toMatch(/^\$\d+\.\d{2}$/);
     }
   });
 
   it('adds an item to cart from inventory page', async () => {
     await page.click(InventorySel.addBackpack);
-    const badge = await page.$eval(InventorySel.cartBadge, el => el.textContent);
+    const badge = await page.$eval(InventorySel.cartBadge, (el) => el.textContent);
     expect(badge).toBe('1');
   });
 

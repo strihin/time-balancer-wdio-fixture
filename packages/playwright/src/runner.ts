@@ -1,4 +1,4 @@
-import * as child_process from 'child_process';
+import { execSync } from 'node:child_process';
 import { purgeLogs } from '@utils/cleanup';
 import { suites } from './config/suites';
 
@@ -14,7 +14,9 @@ if (suiteArg) {
 } else if (userArgs.length > 0) {
   const maybeSuite = userArgs.find((arg: string) => !arg.startsWith('-'));
   if (maybeSuite) {
-    console.error(`\nUnknown suite: "${maybeSuite}"\nAvailable: ${Object.keys(suites).join(', ')}\n`);
+    console.error(
+      `\nUnknown suite: "${maybeSuite}"\nAvailable: ${Object.keys(suites).join(', ')}\n`,
+    );
     process.exit(1);
   }
 }
@@ -31,4 +33,6 @@ const specFlag = targetSpecs ? `${targetSpecs}` : '';
 purgeLogs();
 
 console.log(`\n> Executing Vitest Suite: ${suiteName || 'ALL SPECS'}\n`);
-child_process.execSync(`./node_modules/.bin/vitest ${vitestFlags} ${specFlag}`, { stdio: 'inherit' });
+execSync(`./node_modules/.bin/vitest ${vitestFlags} ${specFlag}`, {
+  stdio: 'inherit',
+});

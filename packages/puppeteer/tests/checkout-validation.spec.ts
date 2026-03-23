@@ -1,9 +1,9 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { launchBrowser, login } from '@support/auth';
 import { setInputValue } from '@support/checkout';
+import type { Browser, Page } from 'puppeteer';
 
 describe('Checkout – Form Validation', () => {
   let browser: Browser;
@@ -27,7 +27,7 @@ describe('Checkout – Form Validation', () => {
     await setInputValue(page, CheckoutSel.lastName, 'Doe');
     await setInputValue(page, CheckoutSel.postalCode, '10001');
     await page.click(CheckoutSel.continueBtn);
-    const text = await page.$eval(CheckoutSel.error, el => el.textContent ?? '');
+    const text = await page.$eval(CheckoutSel.error, (el) => el.textContent ?? '');
     expect(text).toContain('First Name');
   });
 
@@ -35,7 +35,7 @@ describe('Checkout – Form Validation', () => {
     await setInputValue(page, CheckoutSel.firstName, 'Jane');
     await setInputValue(page, CheckoutSel.postalCode, '10001');
     await page.click(CheckoutSel.continueBtn);
-    const text = await page.$eval(CheckoutSel.error, el => el.textContent ?? '');
+    const text = await page.$eval(CheckoutSel.error, (el) => el.textContent ?? '');
     expect(text).toContain('Last Name');
   });
 
@@ -43,7 +43,7 @@ describe('Checkout – Form Validation', () => {
     await setInputValue(page, CheckoutSel.firstName, 'Jane');
     await setInputValue(page, CheckoutSel.lastName, 'Doe');
     await page.click(CheckoutSel.continueBtn);
-    const text = await page.$eval(CheckoutSel.error, el => el.textContent ?? '');
+    const text = await page.$eval(CheckoutSel.error, (el) => el.textContent ?? '');
     expect(text).toContain('Postal Code');
   });
 

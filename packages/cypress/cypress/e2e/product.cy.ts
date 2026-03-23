@@ -1,5 +1,5 @@
-import { login } from '@support/auth';
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { login } from '@support/auth';
 
 describe('Product Detail', () => {
   beforeEach(() => {
@@ -12,10 +12,13 @@ describe('Product Detail', () => {
   });
 
   it('product detail shows correct name', () => {
-    cy.get(ProductSel.itemName).first().invoke('text').then((name) => {
-      cy.get(ProductSel.itemName).first().click();
-      cy.get(ProductSel.detailName).should('have.text', name);
-    });
+    cy.get(ProductSel.itemName)
+      .first()
+      .invoke('text')
+      .then((name) => {
+        cy.get(ProductSel.itemName).first().click();
+        cy.get(ProductSel.detailName).should('have.text', name);
+      });
   });
 
   it('back button returns to inventory', () => {

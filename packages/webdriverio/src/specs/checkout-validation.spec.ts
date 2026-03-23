@@ -1,7 +1,7 @@
-import { login } from '@support/auth.js';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors.js';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors.js';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors.js';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors.js';
+import { login } from '@support/auth.js';
 
 describe('Checkout – Form Validation', () => {
   beforeEach(async () => {

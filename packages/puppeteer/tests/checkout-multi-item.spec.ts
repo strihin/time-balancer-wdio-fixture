@@ -1,15 +1,13 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 import { users } from '@fixtures/users';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { addThreeItems } from '@support/inventory';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { launchBrowser, login } from '@support/auth';
 import { fillForm } from '@support/fill-form';
-import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { addThreeItems } from '@support/inventory';
 import { parseCurrencyText } from '@utils/price';
-
-
+import type { Browser, Page } from 'puppeteer';
 
 describe('Checkout – Multi-item', () => {
   let browser: Browser;
@@ -28,7 +26,7 @@ describe('Checkout – Multi-item', () => {
   });
 
   it('cart shows 3 items after adding three products', async () => {
-    const badge = await page.$eval(CartSel.badge, el => el.textContent);
+    const badge = await page.$eval(CartSel.badge, (el) => el.textContent);
     const items = await page.$$(CartSel.item);
     expect(badge).toBe('3');
     expect(items).toHaveLength(3);
@@ -46,7 +44,7 @@ describe('Checkout – Multi-item', () => {
     await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
-    const text = await page.$eval(CheckoutSel.itemTotal, el => el.textContent ?? '');
+    const text = await page.$eval(CheckoutSel.itemTotal, (el) => el.textContent ?? '');
     const itemTotal = parseCurrencyText(text);
     expect(itemTotal).toBeGreaterThan(0);
   });
@@ -55,7 +53,7 @@ describe('Checkout – Multi-item', () => {
     await page.click(CartSel.checkout);
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
-    const text = await page.$eval(CheckoutSel.taxLabel, el => el.textContent ?? '');
+    const text = await page.$eval(CheckoutSel.taxLabel, (el) => el.textContent ?? '');
     const tax = parseCurrencyText(text);
     expect(tax).toBeGreaterThan(0);
   });
@@ -66,7 +64,7 @@ describe('Checkout – Multi-item', () => {
     await fillForm(page);
     await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
-    const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
+    const header = await page.$eval(CheckoutSel.completeHeader, (el) => el.textContent);
     expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 });

@@ -1,4 +1,4 @@
-import { users, type User } from '@fixtures/users';
+import { type User, users } from '@fixtures/users';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 
 export const SAUCE_USER = users.standard.username;

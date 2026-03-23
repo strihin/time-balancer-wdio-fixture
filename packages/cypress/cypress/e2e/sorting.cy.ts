@@ -1,7 +1,7 @@
+import { sortOptions } from '@fixtures/checkout';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { login } from '@support/auth';
 import { getItemNames, getItemPrices } from '@support/sorting';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
-import { sortOptions } from '@fixtures/checkout';
 
 describe('Sorting', () => {
   beforeEach(() => {
@@ -10,28 +10,28 @@ describe('Sorting', () => {
   });
 
   it('default sort is Name (A to Z)', () => {
-    getItemNames().then(texts => {
+    getItemNames().then((texts) => {
       expect(texts).to.deep.equal([...texts].sort());
     });
   });
 
   it('sorts by Name (Z to A)', () => {
     cy.get(InventorySel.sortContainer).select(sortOptions.nameZtoA.label);
-    getItemNames().then(texts => {
+    getItemNames().then((texts) => {
       expect(texts).to.deep.equal([...texts].sort().reverse());
     });
   });
 
   it('sorts by Price (low to high)', () => {
     cy.get(InventorySel.sortContainer).select(sortOptions.priceLowToHigh.label);
-    getItemPrices().then(vals => {
+    getItemPrices().then((vals) => {
       expect(vals).to.deep.equal([...vals].sort((a, b) => a - b));
     });
   });
 
   it('sorts by Price (high to low)', () => {
     cy.get(InventorySel.sortContainer).select(sortOptions.priceHighToLow.label);
-    getItemPrices().then(vals => {
+    getItemPrices().then((vals) => {
       expect(vals).to.deep.equal([...vals].sort((a, b) => b - a));
     });
   });

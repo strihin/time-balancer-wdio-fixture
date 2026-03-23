@@ -1,7 +1,7 @@
-import { login } from '@support/auth';
-import { NavSelectors as NavSel } from '@selectors/nav.selectors';
-import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
+import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { login } from '@support/auth';
 
 describe('Logout', () => {
   beforeEach(() => {

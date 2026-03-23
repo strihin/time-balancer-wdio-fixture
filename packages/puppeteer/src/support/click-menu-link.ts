@@ -1,4 +1,4 @@
-import { type Page } from 'puppeteer';
+import type { Page } from 'puppeteer';
 
 /**
  * Clicks a navigation menu link by bypassing Puppeteer's clickable-point check.

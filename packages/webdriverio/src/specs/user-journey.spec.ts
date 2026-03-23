@@ -1,13 +1,13 @@
-import { login } from '@support/auth';
-import { fillCheckoutForm } from '@support/checkout';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 import { users } from '@fixtures/users';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
-import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
-import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { NavSelectors as NavSel } from '@selectors/nav.selectors';
+import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { login } from '@support/auth';
+import { fillCheckoutForm } from '@support/checkout';
 
 describe('User Journey', () => {
   beforeEach(async () => {

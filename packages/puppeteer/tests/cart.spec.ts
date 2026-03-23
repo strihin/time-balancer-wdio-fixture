@@ -1,7 +1,7 @@
-import { type Browser, type Page } from 'puppeteer';
-import { launchBrowser, login } from '@support/auth';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
+import { launchBrowser, login } from '@support/auth';
+import type { Browser, Page } from 'puppeteer';
 
 describe('Cart', () => {
   let browser: Browser;
@@ -24,7 +24,7 @@ describe('Cart', () => {
 
   it('adds an item and cart badge shows 1', async () => {
     await page.click(InventorySel.addBackpack);
-    const badge = await page.$eval(CartSel.badge, el => el.textContent);
+    const badge = await page.$eval(CartSel.badge, (el) => el.textContent);
     expect(badge).toBe('1');
   });
 
@@ -46,7 +46,7 @@ describe('Cart', () => {
   it('cart badge updates when adding multiple items', async () => {
     await page.click(InventorySel.addBackpack);
     await page.click(InventorySel.addBikeLight);
-    const badge = await page.$eval(CartSel.badge, el => el.textContent);
+    const badge = await page.$eval(CartSel.badge, (el) => el.textContent);
     expect(badge).toBe('2');
   });
 });

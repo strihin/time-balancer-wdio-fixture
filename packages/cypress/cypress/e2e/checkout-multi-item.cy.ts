@@ -1,11 +1,11 @@
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { users } from '@fixtures/users';
+import { CartSelectors as CartSel } from '@selectors/cart.selectors';
+import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { login } from '@support/auth';
 import { fillCheckoutForm } from '@support/checkout';
 import { addThreeItems } from '@support/inventory';
-import { users } from '@fixtures/users';
-import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
-import { CartSelectors as CartSel } from '@selectors/cart.selectors';
-import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 import { parseCurrencyText } from '@utils/price';
 
 describe('Checkout – Multi-item', () => {
@@ -29,19 +29,23 @@ describe('Checkout – Multi-item', () => {
   it('item total on overview matches sum of item prices', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(CheckoutSel.itemTotal).invoke('text').then((text) => {
-      const itemTotal = parseCurrencyText(text);
-      expect(itemTotal).to.be.greaterThan(0);
-    });
+    cy.get(CheckoutSel.itemTotal)
+      .invoke('text')
+      .then((text) => {
+        const itemTotal = parseCurrencyText(text);
+        expect(itemTotal).to.be.greaterThan(0);
+      });
   });
 
   it('tax is calculated on overview', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
-    cy.get(CheckoutSel.taxLabel).invoke('text').then((text) => {
-      const tax = parseCurrencyText(text);
-      expect(tax).to.be.greaterThan(0);
-    });
+    cy.get(CheckoutSel.taxLabel)
+      .invoke('text')
+      .then((text) => {
+        const tax = parseCurrencyText(text);
+        expect(tax).to.be.greaterThan(0);
+      });
   });
 
   it('completes checkout with multiple items', () => {

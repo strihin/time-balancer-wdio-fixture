@@ -1,5 +1,5 @@
-import { login } from '@support/auth';
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
+import { login } from '@support/auth';
 
 describe('Product Detail', () => {
   beforeEach(async () => {
