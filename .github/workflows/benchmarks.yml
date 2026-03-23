@@ -26,7 +26,7 @@ on:
 
 jobs:
   test:
-    name: Run tests
+    name: Run ${{ github.event.inputs.framework || github.event.client_payload.framework || github.event.action }} benchmarks
     runs-on: ubuntu-latest
 
     steps:
