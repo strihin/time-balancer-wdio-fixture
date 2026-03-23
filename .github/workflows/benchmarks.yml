@@ -1,0 +1,62 @@
+name: Run Performance Benchmarks
+
+on:
+  workflow_dispatch:
+    inputs:
+      framework:
+        description: 'Testing framework to run'
+        required: true
+        type: choice
+        options:
+          - cypress
+          - playwright
+          - puppeteer
+          - webdriverio
+      suite:
+        description: 'Specific test suite to run (leave empty to run all)'
+        required: false
+        default: ''
+        type: string
+  repository_dispatch:
+    types: 
+      - run-cypress
+      - run-playwright
+      - run-puppeteer
+      - run-webdriverio
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Environment Variables
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "framework=${{ github.event.inputs.framework }}" >> $GITHUB_OUTPUT
+            echo "suite=${{ github.event.inputs.suite }}" >> $GITHUB_OUTPUT
+          else
+            # Map 'run-cypress' -> 'cypress', etc.
+            FW=$(echo "${{ github.event.action }}" | sed 's/run-//')
+            echo "framework=$FW" >> $GITHUB_OUTPUT
+            echo "suite=${{ github.event.client_payload.suite }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Framework via Docker Compose
+        run: docker-compose up --build --exit-code-from benchmark
+        env:
+          FRAMEWORK: ${{ steps.vars.outputs.framework }}
+          SUITE: ${{ steps.vars.outputs.suite }}
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_PASS: ${{ secrets.SAUCE_PASS }}
+
+      - name: Upload execution logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ steps.vars.outputs.framework }}-logs
+          path: packages/${{ steps.vars.outputs.framework }}/.logs/
+          retention-days: 7

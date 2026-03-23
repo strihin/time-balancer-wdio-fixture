@@ -12,7 +12,7 @@ export async function launchBrowser(): Promise<Browser> {
   return puppeteer.launch({
     headless: process.env.HEADLESS !== 'false',
     executablePath: process.env.CHROME_BIN || undefined,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu', '--ignore-certificate-errors'],
   });
 }
 

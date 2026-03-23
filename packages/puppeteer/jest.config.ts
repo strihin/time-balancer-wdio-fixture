@@ -10,6 +10,7 @@ const config: Config = {
     '^@fixtures/(.*)$': '<rootDir>/../shared/src/fixtures/$1',
     '^@selectors/(.*)$': '<rootDir>/../shared/src/selectors/$1',
     '^@support/(.*)$': '<rootDir>/src/support/$1',
+    '^@utils/(.*)$': '<rootDir>/../shared/src/utils/$1',
   },
   reporters: [
     'default',

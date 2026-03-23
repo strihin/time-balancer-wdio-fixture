@@ -32,17 +32,15 @@ describe('Sorting', () => {
 
   it('sorts by Price (low to high)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.priceLowToHigh.value);
-    const vals = await page.$$eval(InventorySel.itemPrice, els =>
-      els.map(el => parseCurrencyText(el.textContent ?? ''))
-    );
+    const texts = await page.$$eval(InventorySel.itemPrice, els => els.map(el => el.textContent ?? ''));
+    const vals = texts.map(t => parseCurrencyText(t));
     expect(vals).toEqual([...vals].sort((a, b) => a - b));
   });
 
   it('sorts by Price (high to low)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.priceHighToLow.value);
-    const vals = await page.$$eval(InventorySel.itemPrice, els =>
-      els.map(el => parseCurrencyText(el.textContent ?? ''))
-    );
+    const texts = await page.$$eval(InventorySel.itemPrice, els => els.map(el => el.textContent ?? ''));
+    const vals = texts.map(t => parseCurrencyText(t));
     expect(vals).toEqual([...vals].sort((a, b) => b - a));
   });
 
