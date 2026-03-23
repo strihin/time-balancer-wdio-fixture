@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 /**
@@ -11,5 +11,8 @@ export function purgeLogs() {
     for (const file of readdirSync(logsDir)) {
       rmSync(join(logsDir, file), { recursive: true, force: true });
     }
+  } else {
+    // Ensure the directory exists so Docker volume mounts are stable
+    mkdirSync(logsDir, { recursive: true });
   }
 }
