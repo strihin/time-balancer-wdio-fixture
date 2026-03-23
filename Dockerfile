@@ -41,12 +41,10 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 COPY packages/shared ./packages/shared/
 COPY packages/${FRAMEWORK} ./packages/${FRAMEWORK}/
 
-# Pre-install framework-specific browsers with cache mounts
-RUN --mount=type=cache,id=playwright,target=/ms-playwright \
-    if [ "$FRAMEWORK" = "playwright" ]; then pnpm --filter @benchmarks/playwright exec playwright install --with-deps; fi
+# Pre-install framework-specific browsers (baked into image — no cache mount, they must be present at runtime)
+RUN if [ "$FRAMEWORK" = "playwright" ]; then pnpm --filter @benchmarks/playwright exec playwright install --with-deps; fi
 
-RUN --mount=type=cache,id=cypress,target=/cypress-cache \
-    if [ "$FRAMEWORK" = "cypress" ]; then pnpm --filter @benchmarks/cypress exec cypress install; fi
+RUN if [ "$FRAMEWORK" = "cypress" ]; then pnpm --filter @benchmarks/cypress exec cypress install; fi
 
 RUN if [ "$FRAMEWORK" = "webdriverio" ]; then \
     cd /app/packages/webdriverio && \
