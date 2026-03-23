@@ -61,12 +61,12 @@ jobs:
 
       - name: Debug - List Files
         run: |
-          echo "==== Current Directory Structure ===="
-          ls -R . | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /'
           echo "==== Searching for .logs directories ===="
-          find . -name ".logs" -type d -print
-          echo "==== Listing content of all .logs found ===="
-          find . -name ".logs" -type d -exec ls -R {} +
+          find . -name ".logs" -type d -exec ls -laR {} +
+        if: always()
+
+      - name: Fix Permissions for Artifacts
+        run: sudo chmod -R 777 .
         if: always()
 
       - name: Upload execution logs
@@ -74,5 +74,5 @@ jobs:
         if: always()
         with:
           name: ${{ steps.vars.outputs.framework }}-logs
-          path: packages/${{ steps.vars.outputs.framework }}/.logs/
+          path: packages/${{ steps.vars.outputs.framework }}/.logs
           retention-days: 7
