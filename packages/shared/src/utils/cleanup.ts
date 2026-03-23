@@ -7,6 +7,8 @@ import { join, resolve } from 'node:path';
  */
 export function purgeLogs() {
   const logsDir = resolve('.logs');
+  console.log(`[purgeLogs] CWD: ${process.cwd()}`);
+  console.log(`[purgeLogs] Resolved logsDir: ${logsDir}`);
   if (existsSync(logsDir)) {
     for (const file of readdirSync(logsDir)) {
       rmSync(join(logsDir, file), { recursive: true, force: true });

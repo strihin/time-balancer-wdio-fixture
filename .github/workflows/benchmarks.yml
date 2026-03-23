@@ -59,6 +59,16 @@ jobs:
           SAUCE_USER: ${{ secrets.SAUCE_USER }}
           SAUCE_PASS: ${{ secrets.SAUCE_PASS }}
 
+      - name: Debug - List Files
+        run: |
+          echo "==== Current Directory Structure ===="
+          ls -R . | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /'
+          echo "==== Searching for .logs directories ===="
+          find . -name ".logs" -type d -print
+          echo "==== Listing content of all .logs found ===="
+          find . -name ".logs" -type d -exec ls -R {} +
+        if: always()
+
       - name: Upload execution logs
         uses: actions/upload-artifact@v4
         if: always()
