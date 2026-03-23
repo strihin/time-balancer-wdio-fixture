@@ -2,6 +2,7 @@ import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } fr
 import { login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { sortOptions } from '@fixtures/checkout';
+import { parseCurrencyText } from '@utils/price';
 
 describe('Sorting', () => {
   beforeEach(async ({ page }) => {
@@ -23,14 +24,14 @@ describe('Sorting', () => {
   test('sorts by Price (low to high)', async ({ page }) => {
     await page.locator(InventorySel.sortContainer).selectOption(sortOptions.priceLowToHigh.label);
     const priceTexts = await page.locator(InventorySel.itemPrice).allTextContents();
-    const vals = priceTexts.map(t => parseFloat(t.replace('$', '')));
+    const vals = priceTexts.map(t => parseCurrencyText(t));
     expect(vals).toEqual([...vals].sort((a, b) => a - b));
   });
 
   test('sorts by Price (high to low)', async ({ page }) => {
     await page.locator(InventorySel.sortContainer).selectOption(sortOptions.priceHighToLow.label);
     const priceTexts = await page.locator(InventorySel.itemPrice).allTextContents();
-    const vals = priceTexts.map(t => parseFloat(t.replace('$', '')));
+    const vals = priceTexts.map(t => parseCurrencyText(t));
     expect(vals).toEqual([...vals].sort((a, b) => b - a));
   });
 

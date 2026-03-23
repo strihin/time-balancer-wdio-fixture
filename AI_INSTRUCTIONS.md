@@ -50,6 +50,28 @@
 
 **Reasoning**: Dropping `Sel` makes the alias look like a data model or component import (e.g. `Cart` could be a cart object, not a selector map). The `Sel` suffix makes the intent unambiguous at a glance.
 
+## Import Path Alias Convention
+
+**CRITICAL RULE**: Always use **tsconfig path aliases** for imports. Never use relative paths (`../`, `./`) when a matching alias is configured.
+
+Every package has the following aliases defined in its `tsconfig.json`:
+| Alias | Resolves to |
+|---|---|
+| `@support/*` | `src/support/*` (or `cypress/support/*` for Cypress) |
+| `@selectors/*` | `shared/src/selectors/*` |
+| `@fixtures/*` | `shared/src/fixtures/*` |
+| `@constants/*` | `shared/src/constants/*` |
+| `@utils/*` | `shared/src/utils/*` |
+
+**Examples:**
+| ❌ Wrong — relative path | ✅ Correct — alias |
+|---|---|
+| `import { ... } from '../support/sorting'` | `import { ... } from '@support/sorting'` |
+| `import { ... } from '../support/checkout'` | `import { ... } from '@support/checkout'` |
+| `import { ... } from '../../shared/src/utils/price'` | `import { ... } from '@utils/price'` |
+| `import { ... } from './selectors/login.selectors'` | `import { ... } from '@selectors/login.selectors'` |
+
+**Exceptions**: Internal imports *within the same file's own module* (e.g. a support file importing a sibling support file at the same level) may use `./` relative imports if no alias covers the sub-path.
 
 ## Spec File Purity
 

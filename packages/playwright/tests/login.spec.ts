@@ -1,6 +1,7 @@
 import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
+import { LOCKED_OUT_MSG } from '@constants/index';
 
 describe('Login', () => {
   beforeEach(async ({ page }) => {
@@ -18,7 +19,7 @@ describe('Login', () => {
     await page.locator(LoginSel.username).fill(users.locked.username);
     await page.locator(LoginSel.password).fill(users.locked.password);
     await page.locator(LoginSel.loginButton).click();
-    await expect(page.locator(LoginSel.error)).toContainText('locked out');
+    await expect(page.locator(LoginSel.error)).toContainText(LOCKED_OUT_MSG);
   });
 
   test('shows error for wrong password', async ({ page }) => {

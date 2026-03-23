@@ -15,8 +15,12 @@
       "@constants/*": ["../shared/src/constants/*"],
       "@fixtures/*": ["../shared/src/fixtures/*"],
       "@selectors/*": ["../shared/src/selectors/*"],
-      "@support/*": ["src/support/*"]
+      "@support/*": ["src/support/*"],
+      "@utils/*": ["../shared/src/utils/*"]
     }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

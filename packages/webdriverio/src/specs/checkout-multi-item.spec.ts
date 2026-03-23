@@ -5,6 +5,8 @@ import { users } from '@fixtures/users';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { parseCurrencyText } from '@utils/price';
 
 describe('Checkout – Multi-item', () => {
   beforeEach(async () => {
@@ -30,7 +32,7 @@ describe('Checkout – Multi-item', () => {
     await $(CartSel.checkout).click();
     await fillCheckoutForm();
     const itemTotalText = await $(CheckoutSel.itemTotal).getText();
-    const itemTotal = parseFloat(itemTotalText.replace(/[^0-9.]/g, ''));
+    const itemTotal = parseCurrencyText(itemTotalText);
     expect(itemTotal).toBeGreaterThan(0);
   });
 
@@ -38,7 +40,7 @@ describe('Checkout – Multi-item', () => {
     await $(CartSel.checkout).click();
     await fillCheckoutForm();
     const taxText = await $(CheckoutSel.taxLabel).getText();
-    const tax = parseFloat(taxText.replace(/[^0-9.]/g, ''));
+    const tax = parseCurrencyText(taxText);
     expect(tax).toBeGreaterThan(0);
   });
 
@@ -46,6 +48,6 @@ describe('Checkout – Multi-item', () => {
     await $(CartSel.checkout).click();
     await fillCheckoutForm();
     await $(CheckoutSel.finishBtn).click();
-    await expect($(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect($(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 });

@@ -5,6 +5,7 @@ import { InventorySelectors as InventorySel } from '@selectors/inventory.selecto
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { fillForm } from '@support/fill-form';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 
 describe('Checkout', () => {
@@ -55,7 +56,7 @@ describe('Checkout', () => {
     await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
     const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
-    expect(header).toBe('Thank you for your order!');
+    expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 
   it('can navigate back to home after checkout', async () => {

@@ -1,9 +1,10 @@
 import { login } from '@support/auth';
-import { fillCheckoutForm } from '../support/checkout';
+import { fillCheckoutForm } from '@support/checkout';
 import { users } from '@fixtures/users';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 describe('Checkout', () => {
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe('Checkout', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
     cy.get(CheckoutSel.finishBtn).click();
-    cy.get(CheckoutSel.completeHeader).should('have.text', 'Thank you for your order!');
+    cy.get(CheckoutSel.completeHeader).should('have.text', CHECKOUT_SUCCESS_MSG);
   });
 
   it('can navigate back to home after checkout', () => {

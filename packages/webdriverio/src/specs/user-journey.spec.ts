@@ -7,6 +7,7 @@ import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors'
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
 import { NavSelectors as NavSel } from '@selectors/nav.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 describe('User Journey', () => {
   beforeEach(async () => {
@@ -21,7 +22,7 @@ describe('User Journey', () => {
     await $(CartSel.checkout).click();
     await fillCheckoutForm();
     await $(CheckoutSel.finishBtn).click();
-    await expect($(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect($(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 
   it('add item, return to shopping, add second item, checkout both', async () => {
@@ -49,7 +50,7 @@ describe('User Journey', () => {
     await $(CartSel.checkout).click();
     await fillCheckoutForm();
     await $(CheckoutSel.finishBtn).click();
-    await expect($(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect($(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 
   it('complete checkout and return to inventory via back-to-products', async () => {

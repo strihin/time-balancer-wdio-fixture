@@ -3,7 +3,7 @@ import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
-import { BASE_URL } from '@constants/index';
+import { BASE_URL, LOCKED_OUT_MSG} from '@constants/index';
 
 describe('Login', () => {
   let browser: Browser;
@@ -29,7 +29,7 @@ describe('Login', () => {
     await login(page, users.locked, false);
     await page.waitForSelector(LoginSel.error);
     const text = await page.$eval(LoginSel.error, el => el.textContent ?? '');
-    expect(text).toContain('locked out');
+    expect(text).toContain(LOCKED_OUT_MSG);
   });
 
   it('shows error for wrong password', async () => {

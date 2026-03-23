@@ -1,19 +1,11 @@
 import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
+import { fillCheckoutForm } from '@support/checkout';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
-
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-async function fillCheckoutForm(page: import('@playwright/test').Page) {
-  await page.locator(CheckoutSel.firstName).fill(firstName);
-  await page.locator(CheckoutSel.lastName).fill(lastName);
-  await page.locator(CheckoutSel.postalCode).fill(postalCode);
-  await page.locator(CheckoutSel.continueBtn).click();
-}
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 describe('Checkout', () => {
   beforeEach(async ({ page }) => {
@@ -43,7 +35,7 @@ describe('Checkout', () => {
     await page.locator(CartSel.checkout).click();
     await fillCheckoutForm(page);
     await page.locator(CheckoutSel.finishBtn).click();
-    await expect(page.locator(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect(page.locator(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 
   test('can navigate back to home after checkout', async ({ page }) => {

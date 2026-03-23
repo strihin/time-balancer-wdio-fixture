@@ -1,22 +1,14 @@
 import { test, expect, describe, beforeEach, afterEach, beforeAll, afterAll } from '@support/test';
 import { login } from '@support/auth';
+import { fillCheckoutForm } from '@support/checkout';
 import { users } from '@fixtures/users';
-import { checkoutForms } from '@fixtures/checkout';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
 import { NavSelectors as NavSel } from '@selectors/nav.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
-
-const { firstName, lastName, postalCode } = checkoutForms.valid;
-
-async function fillForm(page: import('@playwright/test').Page) {
-  await page.locator(CheckoutSel.firstName).fill(firstName);
-  await page.locator(CheckoutSel.lastName).fill(lastName);
-  await page.locator(CheckoutSel.postalCode).fill(postalCode);
-  await page.locator(CheckoutSel.continueBtn).click();
-}
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 describe('User Journey', () => {
   beforeEach(async ({ page }) => {
@@ -29,9 +21,9 @@ describe('User Journey', () => {
     await page.locator(ProductSel.addToCartBtn).click();
     await page.locator(InventorySel.cartLink).click();
     await page.locator(CartSel.checkout).click();
-    await fillForm(page);
+    await fillCheckoutForm(page);
     await page.locator(CheckoutSel.finishBtn).click();
-    await expect(page.locator(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect(page.locator(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 
   test('add item, return to shopping, add second item, checkout both', async ({ page }) => {
@@ -43,7 +35,7 @@ describe('User Journey', () => {
     await page.locator(InventorySel.cartLink).click();
     await expect(page.locator(CartSel.item)).toHaveCount(2);
     await page.locator(CartSel.checkout).click();
-    await fillForm(page);
+    await fillCheckoutForm(page);
     await page.locator(CheckoutSel.finishBtn).click();
     await expect(page.locator(CheckoutSel.completeHeader)).toBeVisible();
   });
@@ -55,16 +47,16 @@ describe('User Journey', () => {
     await page.locator(CartSel.removeBikeLight).click();
     await expect(page.locator(CartSel.item)).toHaveCount(1);
     await page.locator(CartSel.checkout).click();
-    await fillForm(page);
+    await fillCheckoutForm(page);
     await page.locator(CheckoutSel.finishBtn).click();
-    await expect(page.locator(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect(page.locator(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 
   test('complete checkout and return to inventory via back-to-products', async ({ page }) => {
     await page.locator(InventorySel.addBackpack).click();
     await page.locator(InventorySel.cartLink).click();
     await page.locator(CartSel.checkout).click();
-    await fillForm(page);
+    await fillCheckoutForm(page);
     await page.locator(CheckoutSel.finishBtn).click();
     await page.locator(CheckoutSel.backToProducts).click();
     await expect(page.locator(InventorySel.list)).toBeVisible();
@@ -75,7 +67,7 @@ describe('User Journey', () => {
     await page.locator(InventorySel.addFleeceJacket).click();
     await page.locator(InventorySel.cartLink).click();
     await page.locator(CartSel.checkout).click();
-    await fillForm(page);
+    await fillCheckoutForm(page);
     await page.locator(CheckoutSel.finishBtn).click();
     await page.locator(CheckoutSel.backToProducts).click();
     await page.locator(NavSel.burgerMenuBtn).click();

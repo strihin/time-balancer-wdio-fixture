@@ -1,18 +1,7 @@
 import { login } from '@support/auth';
+import { getItemNames, getItemPrices } from '@support/sorting';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { sortOptions } from '@fixtures/checkout';
-
-function getItemNames() {
-  return cy.get(InventorySel.itemName).then(($elements) => {
-    return Cypress.$.makeArray($elements).map(el => el.innerText);
-  });
-}
-
-function getItemPrices() {
-  return cy.get(InventorySel.itemPrice).then(($elements) => {
-    return Cypress.$.makeArray($elements).map(el => parseFloat(el.innerText.replace('$', '')));
-  });
-}
 
 describe('Sorting', () => {
   beforeEach(() => {

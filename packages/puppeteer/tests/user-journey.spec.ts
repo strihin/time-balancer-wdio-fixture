@@ -10,6 +10,7 @@ import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 
 import { fillForm } from '@support/fill-form';
 import { clickMenuLink } from '@support/click-menu-link';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 
 describe('User Journey', () => {
@@ -38,7 +39,7 @@ describe('User Journey', () => {
     await page.click(CheckoutSel.finishBtn);
     await page.waitForSelector(CheckoutSel.completeHeader);
     const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
-    expect(header).toBe('Thank you for your order!');
+    expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 
   it('add item, return to shopping, add second item, checkout both', async () => {
@@ -76,7 +77,7 @@ describe('User Journey', () => {
     await page.click(CheckoutSel.finishBtn);
     await page.waitForSelector(CheckoutSel.completeHeader);
     const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
-    expect(header).toBe('Thank you for your order!');
+    expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 
   it('complete checkout and return to inventory via back-to-products', async () => {

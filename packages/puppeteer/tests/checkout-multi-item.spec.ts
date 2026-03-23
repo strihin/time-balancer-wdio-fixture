@@ -6,6 +6,8 @@ import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
 import { addThreeItems } from '@support/inventory';
 import { fillForm } from '@support/fill-form';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { parseCurrencyText } from '@utils/price';
 
 
 
@@ -45,7 +47,7 @@ describe('Checkout – Multi-item', () => {
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     const text = await page.$eval(CheckoutSel.itemTotal, el => el.textContent ?? '');
-    const itemTotal = parseFloat(text.replace(/[^0-9.]/g, ''));
+    const itemTotal = parseCurrencyText(text);
     expect(itemTotal).toBeGreaterThan(0);
   });
 
@@ -54,7 +56,7 @@ describe('Checkout – Multi-item', () => {
     await page.waitForSelector(CheckoutSel.infoContainer);
     await fillForm(page);
     const text = await page.$eval(CheckoutSel.taxLabel, el => el.textContent ?? '');
-    const tax = parseFloat(text.replace(/[^0-9.]/g, ''));
+    const tax = parseCurrencyText(text);
     expect(tax).toBeGreaterThan(0);
   });
 
@@ -65,6 +67,6 @@ describe('Checkout – Multi-item', () => {
     await page.waitForSelector(CheckoutSel.finishBtn);
     await page.click(CheckoutSel.finishBtn);
     const header = await page.$eval(CheckoutSel.completeHeader, el => el.textContent);
-    expect(header).toBe('Thank you for your order!');
+    expect(header).toBe(CHECKOUT_SUCCESS_MSG);
   });
 });

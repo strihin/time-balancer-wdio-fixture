@@ -2,6 +2,7 @@ import { type Browser, type Page } from 'puppeteer';
 import { launchBrowser, login } from '@support/auth';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { sortOptions } from '@fixtures/checkout';
+import { parseCurrencyText } from '@utils/price';
 
 describe('Sorting', () => {
   let browser: Browser;
@@ -32,7 +33,7 @@ describe('Sorting', () => {
   it('sorts by Price (low to high)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.priceLowToHigh.value);
     const vals = await page.$$eval(InventorySel.itemPrice, els =>
-      els.map(el => parseFloat((el.textContent ?? '').replace('$', '')))
+      els.map(el => parseCurrencyText(el.textContent ?? ''))
     );
     expect(vals).toEqual([...vals].sort((a, b) => a - b));
   });
@@ -40,7 +41,7 @@ describe('Sorting', () => {
   it('sorts by Price (high to low)', async () => {
     await page.select(InventorySel.sortContainer, sortOptions.priceHighToLow.value);
     const vals = await page.$$eval(InventorySel.itemPrice, els =>
-      els.map(el => parseFloat((el.textContent ?? '').replace('$', '')))
+      els.map(el => parseCurrencyText(el.textContent ?? ''))
     );
     expect(vals).toEqual([...vals].sort((a, b) => b - a));
   });

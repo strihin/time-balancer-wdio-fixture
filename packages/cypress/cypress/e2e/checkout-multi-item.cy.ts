@@ -1,10 +1,12 @@
 import { login } from '@support/auth';
-import { fillCheckoutForm } from '../support/checkout';
-import { addThreeItems } from '../support/inventory';
+import { fillCheckoutForm } from '@support/checkout';
+import { addThreeItems } from '@support/inventory';
 import { users } from '@fixtures/users';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
+import { parseCurrencyText } from '@utils/price';
 
 describe('Checkout – Multi-item', () => {
   beforeEach(() => {
@@ -28,7 +30,7 @@ describe('Checkout – Multi-item', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
     cy.get(CheckoutSel.itemTotal).invoke('text').then((text) => {
-      const itemTotal = parseFloat(text.replace(/[^0-9.]/g, ''));
+      const itemTotal = parseCurrencyText(text);
       expect(itemTotal).to.be.greaterThan(0);
     });
   });
@@ -37,7 +39,7 @@ describe('Checkout – Multi-item', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
     cy.get(CheckoutSel.taxLabel).invoke('text').then((text) => {
-      const tax = parseFloat(text.replace(/[^0-9.]/g, ''));
+      const tax = parseCurrencyText(text);
       expect(tax).to.be.greaterThan(0);
     });
   });
@@ -46,6 +48,6 @@ describe('Checkout – Multi-item', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
     cy.get(CheckoutSel.finishBtn).click();
-    cy.get(CheckoutSel.completeHeader).should('have.text', 'Thank you for your order!');
+    cy.get(CheckoutSel.completeHeader).should('have.text', CHECKOUT_SUCCESS_MSG);
   });
 });

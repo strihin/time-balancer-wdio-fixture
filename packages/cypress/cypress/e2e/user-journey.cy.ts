@@ -1,5 +1,5 @@
 import { login } from '@support/auth';
-import { fillCheckoutForm } from '../support/checkout';
+import { fillCheckoutForm } from '@support/checkout';
 import { users } from '@fixtures/users';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
@@ -7,6 +7,7 @@ import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors'
 import { ProductSelectors as ProductSel } from '@selectors/product.selectors';
 import { NavSelectors as NavSel } from '@selectors/nav.selectors';
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 describe('User Journey', () => {
   beforeEach(() => {
@@ -21,7 +22,7 @@ describe('User Journey', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
     cy.get(CheckoutSel.finishBtn).click();
-    cy.get(CheckoutSel.completeHeader).should('have.text', 'Thank you for your order!');
+    cy.get(CheckoutSel.completeHeader).should('have.text', CHECKOUT_SUCCESS_MSG);
   });
 
   it('add item, return to shopping, add second item, checkout both', () => {
@@ -47,7 +48,7 @@ describe('User Journey', () => {
     cy.get(CartSel.checkout).click();
     fillCheckoutForm();
     cy.get(CheckoutSel.finishBtn).click();
-    cy.get(CheckoutSel.completeHeader).should('have.text', 'Thank you for your order!');
+    cy.get(CheckoutSel.completeHeader).should('have.text', CHECKOUT_SUCCESS_MSG);
   });
 
   it('complete checkout and return to inventory via back-to-products', () => {

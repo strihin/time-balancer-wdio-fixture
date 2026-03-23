@@ -4,6 +4,7 @@ import { users } from '@fixtures/users';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { CartSelectors as CartSel } from '@selectors/cart.selectors';
 import { CheckoutSelectors as CheckoutSel } from '@selectors/checkout.selectors';
+import { CHECKOUT_SUCCESS_MSG } from '@constants/index';
 
 // performance_glitch_user adds artificial delays per page load → ~10 s per step
 describe('Checkout', () => {
@@ -36,7 +37,7 @@ describe('Checkout', () => {
     await $(CartSel.checkout).click();
     await fillCheckoutForm();
     await $(CheckoutSel.finishBtn).click();
-    await expect($(CheckoutSel.completeHeader)).toHaveText('Thank you for your order!');
+    await expect($(CheckoutSel.completeHeader)).toHaveText(CHECKOUT_SUCCESS_MSG);
   });
 
   it('can navigate back to home after checkout', async () => {

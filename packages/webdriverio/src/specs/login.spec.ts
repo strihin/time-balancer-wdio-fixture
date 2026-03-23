@@ -1,5 +1,6 @@
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
+import { LOCKED_OUT_MSG } from '@constants/index';
 
 describe('Login', () => {
   beforeEach(async () => {
@@ -17,7 +18,7 @@ describe('Login', () => {
     await $(LoginSel.username).setValue(users.locked.username);
     await $(LoginSel.password).setValue(users.locked.password);
     await $(LoginSel.loginButton).click();
-    await expect($(LoginSel.error)).toHaveText(expect.stringContaining('locked out'));
+    await expect($(LoginSel.error)).toHaveText(expect.stringContaining(LOCKED_OUT_MSG));
   });
 
   it('shows error for wrong password', async () => {

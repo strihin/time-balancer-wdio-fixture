@@ -1,5 +1,6 @@
 import { LoginSelectors as LoginSel } from '@selectors/login.selectors';
 import { users } from '@fixtures/users';
+import { LOCKED_OUT_MSG } from '@constants/index';
 
 describe('Login', () => {
   beforeEach(() => {
@@ -17,7 +18,7 @@ describe('Login', () => {
     cy.get(LoginSel.username).type(users.locked.username);
     cy.get(LoginSel.password).type(users.locked.password);
     cy.get(LoginSel.loginButton).click();
-    cy.get(LoginSel.error).should('contain.text', 'locked out');
+    cy.get(LoginSel.error).should('contain.text', LOCKED_OUT_MSG);
   });
 
   it('shows error for wrong password', () => {

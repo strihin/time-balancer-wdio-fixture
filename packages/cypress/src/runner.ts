@@ -1,7 +1,7 @@
 import * as child_process from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { purgeLogs } from '../../shared/src/utils/cleanup';
+import { purgeLogs } from '@utils/cleanup';
 import { suites } from './config/suites';
 
 const mode = process.argv[2]; // 'run' or 'open'

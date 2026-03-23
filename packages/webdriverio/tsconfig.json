@@ -13,7 +13,8 @@
       "@constants/*": ["../shared/src/constants/*"],
       "@fixtures/*": ["../shared/src/fixtures/*"],
       "@selectors/*": ["../shared/src/selectors/*"],
-      "@support/*": ["src/support/*"]
+      "@support/*": ["src/support/*"],
+      "@utils/*": ["../shared/src/utils/*"]
     },
     "types": ["node", "@wdio/globals/types", "mocha"]
   },

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "ts-node src/runner.ts run",
+    "test": "ts-node -r tsconfig-paths/register src/runner.ts run",
     "pretest:ui": "rm -rf .logs",
-    "test:ui": "ts-node src/runner.ts open"
+    "test:ui": "ts-node -r tsconfig-paths/register src/runner.ts open"
   },
   "dependencies": {
     "@benchmarks/shared": "workspace:*"

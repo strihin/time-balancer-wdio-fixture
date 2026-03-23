@@ -1,15 +1,7 @@
 import { login } from '@support/auth';
+import { getItemNames, getItemPrices } from '@support/sorting';
 import { InventorySelectors as InventorySel } from '@selectors/inventory.selectors';
 import { sortOptions } from '@fixtures/checkout';
-
-async function getItemNames(): Promise<string[]> {
-  return $$(InventorySel.itemName).map((el) => el.getText());
-}
-
-async function getItemPrices(): Promise<number[]> {
-  const texts: string[] = await $$(InventorySel.itemPrice).map((el) => el.getText());
-  return texts.map((t) => parseFloat(t.replace('$', '')));
-}
 
 describe('Sorting', () => {
   beforeEach(async () => {
