@@ -59,14 +59,8 @@ jobs:
           SAUCE_USER: ${{ secrets.SAUCE_USER }}
           SAUCE_PASS: ${{ secrets.SAUCE_PASS }}
 
-      - name: Debug - List Files
-        run: |
-          echo "==== Searching for .logs directories ===="
-          find . -name ".logs" -type d -exec ls -laR {} +
-        if: always()
-
-      - name: Fix Permissions for Artifacts
-        run: sudo chmod -R 777 .
+      - name: Debug - List log files
+        run: find . -name ".logs" -type d -exec ls -laR {} +
         if: always()
 
       - name: Upload execution logs

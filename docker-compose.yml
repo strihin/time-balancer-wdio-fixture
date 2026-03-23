@@ -20,5 +20,6 @@ services:
     volumes:
       # Map the generated logs out so standard local tools can access them
       - ./packages/${FRAMEWORK:-playwright}/.logs:/app/packages/${FRAMEWORK:-playwright}/.logs
-    command: >
-      sh -c 'pnpm --filter @benchmarks/${FRAMEWORK:-playwright} test ${SUITE}; RET=$$?; chmod -R 777 packages/${FRAMEWORK:-playwright}/.logs; exit $$RET'
+    # Run as the host user so logs written to volumes are readable by the GHA runner
+    user: "${UID:-1001}:${GID:-1001}"
+    command: pnpm --filter @benchmarks/${FRAMEWORK:-playwright} test ${SUITE}
